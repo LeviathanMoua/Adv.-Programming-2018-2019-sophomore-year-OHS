@@ -1,0 +1,196 @@
+'''
+Instructions from your teacher:
+Write a program that will simulate a cash register:
+
+Heading:  Store name,address, and phone number
+Enter UPC and Quantity
+Retrieve Product description and price(database)
+Give the cashier away to signal that the transaction is complete.
+Provide subtotal, tax, total, cash tendered and caculate change.
+Reduce the count on your products accordingly.
+
+************************************sample code
+ 
+# This program should show:
+# Date, Time, Code, Quanity, Subtotal, Tax, Total
+
+import sqlite3
+conn = sqlite3.connect('prodcuts.db')
+print("Database Opened")
+c = conn.cursor()
+
+def CreateTable():
+  c.execute('CREATE TABLE StoreItems(UPC INTEGER PRIMARY KEY,Product TEXT,Price REAL,ProductCount INTEGER)')
+
+def WriteItems():
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1111,'EGGS',3.50,150)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1112,'CORN',2.50,250)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1113,'BREAD',1.50,350)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1114,'MILK',4.50,450)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1115,'PASTA',5.50,550)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1116,'CEREAL',6.50,650)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1117,'TURKEY',7.50,750)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1118,'HAM',8.50,850)")
+  c.execute("INSERT INTO StoreItems(UPC,Product,Price,ProductCount) VALUES(1119,'SAUSAGE',9.50,950)")
+
+#CreateTable()
+WriteItems()
+
+while True:
+  UPC=int(input("Enter UPC "))
+ if UPC==0:
+ break
+  iQty=int(input("Enter QTY "))  
+  sql="SELECT PRODUCT, PRICE FROM StoreItems WHERE UPC="+str(UPC)
+ print(sql)
+  c.execute(sql)
+  sItems=c.fetchall()
+ print(iQty + " " + sItems[0][0] + "                 "+sItems[1][1])
+ 
+
+
+#footer
+print(" Thank you for eating at Taco Bell ")
+print()
+#print(datetime.now().strftime('Date: %Y-%m-%d   Time: %H:%M:%S'))
+print("Order: 330116")
+'''
+
+import sqlite3
+#https://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html
+conn = sqlite3.connect('products.db')
+print("Opened database successfully!")
+
+c = conn.cursor()
+
+c.execute('CREATE TABLE IF NOT EXISTS tblStoreItems(intUniversalProductCode INT,strProductName TEXT,intQuantity INT,fltPrice REAL)')
+conn.commit()
+
+def funStoreItems():
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0001,'EGGS',421,3.5)")#1,473.5
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0002,'TURKEY',803,7.75)") #6,223.25
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0003,'HAM',921,7.25)") #6,720.75
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0004,'BREAD',212,4)")  #848
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0005,'PANCAKE MIX',104,8)") #832
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0006,'CHEESE',742,2)") #1,484
+
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0007,'SAUSAGE',654,10)") #6,540
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0008,'CEREAL',1000,2)") #2,000
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0009,'MILK',1223,4.5)") #55053.5
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0010,'ORANGE JUICE',542,4)") #2,096
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0011,'SALAD',213,3)") #639
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0012,'ICE CREAM',666,5)") #3,330
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0013,'CHOCOLATE',1268,1)") #1,268
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0014,'CORN',364,3.75)") #1,365
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0015,'PASTA',196,6.75)")#1,323
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0016,'BANANA',150,4)") #600
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0017,'APPLE',407,4)") #1,628
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0018,'STEAK',545,15)") #8,175
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0019,'CARROT',312,2.5)") #802.5
+    
+    c.execute("INSERT INTO tblStoreItems(intUniversalProductCode,strProductName,intQuantity,fltPrice) VALUES(0020,'SUSHI',53,20)") #1,060
+    
+    conn.commit()
+
+
+def funCashRegister():
+  print("\n________________________________________________\nHere are the list of things that you can buy:\n________________________________________________\n\n================================================\nItem: Eggs         |  UPC: 0001  | Price: 3.5\nItem: Turkey       |  UPC: 0002  | Price: 7.75\nItem: Ham          |  UPC: 0003  | Price: 7.25\nItem: Bread        |  UPC: 0004  | Price: 4\nItem: Pancake      |  UPC: 0005  | Price: 8\nItem: Cheese       |  UPC: 0006  | Price: 2\nItem: Sausage      |  UPC: 0007  | Price: 10\nItem: Cereal       |  UPC: 0008  | Price: 2\nItem: Milk         |  UPC: 0009  | Price: 4.5\nItem: Orange Juice |  UPC: 0010  | Price: 4\nItem: Salad        |  UPC: 0011  | Price: 3\nItem: Ice Cream    |  UPC: 0012  | Price: 5\nItem: Chocolate    |  UPC: 0013  | Price: 1\nItem: Corn         |  UPC: 0014  | Price: 3.75\nItem: Pasta        |  UPC: 0015  | Price: 6.75\nItem: Banana       |  UPC: 0016  | Price: 4\nItem: Apple        |  UPC: 0017  | Price: 4\nItem: Steak        |  UPC: 0018  | Price: 15\nItem: Carrot       |  UPC: 0019  | Price: 2.5\nItem: Sushi        |  UPC: 0020  | Price: 20\n==================================================")
+
+
+  UPC_input_or_Item = ""
+  #Asks the user how may groups of products they want to purchase.
+  how_many = int(input("How many products TOTAL would you like to purchase?"))
+
+  #Array for prices
+  price_array = []
+  product_array = []
+  for x in range(how_many):
+    UPC_input = int(input("\nPlease enter the UPC:"))
+    print("")
+    
+    #Retrieves price of product
+    c.execute("SELECT fltPrice FROM tblStoreItems WHERE intUniversalProductCode=:UPC",{'UPC':UPC_input})
+    price = c.fetchone()
+    price = (price[0])
+    price_array.append(price)
+
+    #RETRIEVES The Item name
+    c.execute("SELECT strProductName FROM tblStoreItems WHERE intUniversalProductCode=:UPC",{'UPC':UPC_input})
+    product_name = c.fetchone()
+    product_name = (product_name[0])
+    product_array.append(product_name)
+    #product_array = (product_array[x])
+    
+
+  #COST
+  subtotal = sum(price_array)
+  taxrate = 0.08917
+  tax = round(subtotal*taxrate,2)
+  total = (subtotal+tax)
+  print('Total price:',total)
+
+  #When there is no entry for the upc, the query hits the DB and brings nothing. so, this if condition gets executed.
+  if c.execute("select * from tblStoreItems where intUniversalProductCode="+str(UPC_input)) is None:
+     print("Sorry, we dont have such an entry!!")
+
+  #when the query returns an output it means, there is an entry for the upc
+  else:
+      #RETREIVES THE UPC
+      c.execute("SELECT intUniversalProductCode FROM tblStoreItems WHERE intUniversalProductCode=:UPC",{'UPC':UPC_input})
+      UPC = c.fetchone()
+      #print(UPC[0])
+      UPC = (UPC[0])
+
+      
+      
+      
+
+      #Payment function
+      def funPay():
+        payment = float(input("\nHow much did the user give you?"))
+        
+        if payment < total:
+          print("\nThe costumer did not give you enough cash!\n")
+          funPay()
+        elif payment > total:
+          change = round(payment - total,2)
+          print("Change:",change)
+          print("\nItem bought: ",product_name)#Create a variable that takes out the item name from the database
+          
+          print("\n════════════════════════════════════════════\n                  RECIEPT\n════════════════════════════════════════════\n DATABASE STORE                             \n\n 98th St. N.\n\n CALL US @ 207-101-DATA\n════════════════════════════════════════════\n BOUGHT:")
+          for x in range(len(product_array)):
+            print("  ",product_array[x])
+          print("════════════════════════════════════════════\n Subtotal:",subtotal,"\n\n Tax:",tax,"\n\n Total:",total,"\n\n════════════════════════════════════════════\n Change:",change,"\n════════════════════════════════════════════\n Thank you for visiting!  Please come again!\n════════════════════════════════════════════")
+      funPay()
+
+
+def control_center():
+
+  
+  #funBankAccount()
+
+  
+  funStoreItems()
+
+  funCashRegister()
+  
+
+
+control_center()
