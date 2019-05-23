@@ -1,0 +1,216 @@
+'''
+Instructions from your teacher:
+Build a Tkinter calculator.  It should be able to add, subtract, multiply and divide.  You should be able to clear the screen.
+
+The program will consist of 10 buttons for numbers, one button for clear, a small menu for exiting the program, and a text box for input and output.
+
+DO NOT COPY/PASTE CODE FROM THE WEB:  INSTANT F
+'''
+
+import tkinter
+import tkinter as tki
+from tkinter import *
+#=======================================RESOURCES=======================================
+#==========MODULES===========
+#https://stackoverflow.com/questions/44731227/what-is-the-difference-between-these-two-ways-of-importing-tkinter
+#Explains the difference in importing each of the modules above
+
+#=======VARIABLE CLASSES=====
+#https://effbot.org/tkinterbook/variable.htm
+#The link above expalins about variable classes.
+
+#=======TKINTER ENTRY========
+#https://www.tutorialspoint.com/python/tk_entry.htm
+#The link above explains tkinter entry
+
+#==========LAMBDA===========
+#explains about lambda
+#https://thepythonguru.com/python-lambda-function/
+#https://www.w3schools.com/python/python_lambda.asp
+#https://pythonprogramming.net/passing-functions-parameters-tkinter-using-lambda/
+#Longs story short, lambda is an anonymous function in python.
+
+# Function to update expression
+# in the text entry box
+#=======================================RESOURCES=======================================
+
+#turns the expression into a string
+expression = ""
+#=======================================FUNCTIONS=======================================
+def keypress(num): 
+	# point out the global expression variable 
+	global expression 
+
+	# concatenation of string 
+	expression = expression + str(num) 
+
+	# update the expression by using set method 
+	equation.set(expression) 
+
+
+# Function to evaluate the final expression 
+def equalpress(): 
+    #Checks for divide by zero error
+    try: 
+        global expression 
+        #This turns the STRING EXPRESSION into an answer then turns it back into a string
+        total = str(eval(expression)) 
+          
+        equation.set(total) 
+  
+        # initialze the expression variable 
+        # by empty string 
+        expression = "" 
+  
+    # if error is generate then handle 
+    # by the except block 
+    except: 
+  
+        equation.set(" Cannot divide by zero. ") 
+        expression = ""
+
+        
+# Function to clear the contents 
+# of text entry box 
+def clear(): 
+	global expression 
+	expression = "" 
+	equation.set("")
+
+#This will allow the user to close the window.
+def close_window (): 
+    CalculatorWindow.destroy()
+
+#This function will allow us to create the button.  Below, we
+#are using a for loop which checks for how many times the for loop runs.
+#Every 3 or 4 time it loops, we will be replacing the row and column placing
+#as well as the display text.  
+def makeButton():
+        global rowPlacing
+        global columnPlacing
+        global columnInstance
+        global intNum
+        #These are the numbers for the position in which we'll
+        #place the numbers/widgets
+        button.grid(row = rowPlacing, column = columnPlacing)
+        columnInstance += 1
+        columnPlacing += 1
+        intNum +=1
+#=======================================FUNCTIONS=======================================
+
+
+#==========================================GUI==========================================
+# create a GUI window 
+CalculatorWindow = Tk() 
+
+# set the background colour of GUI window 
+CalculatorWindow.configure(background="light blue") 
+
+# set the title of GUI window 
+CalculatorWindow.title("Calculator") 
+
+# set the configuration of GUI window 
+CalculatorWindow.geometry("300x200") 
+#==========================================GUI==========================================
+
+#===================================EXPRESSION &/ ENTRY BOX=================================
+
+
+equation = StringVar() 
+
+# create the text entry box for 
+# showing the expression . 
+expression_field = Entry(CalculatorWindow, textvariable=equation, width = 10, font = ("Arial", 15, "bold"),justify = 'right') 
+
+#creates a grid for us us to place the widgets.
+expression_field.grid(row = 2, column = 3, columnspan=5, ipadx=91) 
+
+expression_field.grid(row = 2, column = 0)
+equation.set('Click the numbers!') 
+#===================================EXPRESSION ENTRY BOX=================================
+
+#=========================================VARIABLES======================================
+#This will help us to check how many times the for loop has gone.
+columnInstance = 0
+
+#This will be our number in which we press and is displayed on the widgets
+intNum = 1
+
+#This allow us to fix the columns in which the widgets are placed in
+columnPlacing = 0
+
+#=========================================VARIABLES======================================
+
+
+#==========================================BUTTONS=======================================          
+#Creates a button
+for x in range(10):
+
+        strTextNum = str(intNum)
+        #This will be the number that is going to be pressed
+        #as well as the number that will be displayed on the
+        #widget of the claculator.
+        button= Button(CalculatorWindow, text = strTextNum, fg='yellow', bg = 'black',
+                command=lambda x=intNum:keypress(x), height = 1, width = 7)
+        #Every third time the column occurs, add one to it. Once it reaches 3,
+        #go back to 0
+        #SECOND ROW, consists of the numbers 1, 2, 3, and 4.
+        #If the for loop hasn't gone over 3 yet, then add 1 to the column.
+        if columnInstance <= 3:
+                rowPlacing = 3
+                makeButton()
+                if columnInstance == 4:
+                        button.grid(row = 4, column = 0)
+                        columnPlacing = 1
+        #THIRD ROW consists of the numbers 4, 5, and 6
+        elif columnInstance <= 6:
+                rowPlacing = 4
+                makeButton()
+                if columnInstance == 7:
+                        button.grid(row = 5, column = 0)
+                        columnPlacing = 1
+        #FOURTH ROW consists of the number 7,8 and 9
+        elif columnInstance <= 8:
+                rowPlacing = 5
+                makeButton()
+
+#Extra buttons
+button0 = Button(CalculatorWindow, text=' 0 ', fg='yellow',
+                 bg='black',command=lambda: keypress(0), height=1, width=7) 
+button0.grid(row=6, column=1) 
+
+plus = Button(CalculatorWindow, text=' + ', fg='yellow',
+              bg='black',command=lambda: keypress("+"), height=1, width=7) 
+plus.grid(row=3, column=3) 
+
+minus = Button(CalculatorWindow, text=' - ', fg='yellow',
+               bg='black',command=lambda: keypress("-"), height=1, width=7) 
+minus.grid(row=4, column=3) 
+
+multiply = Button(CalculatorWindow, text=' * ', fg='yellow',
+                  bg='black',command=lambda: keypress("*"), height=1, width=7) 
+multiply.grid(row=5, column=3) 
+
+divide = Button(CalculatorWindow, text=' / ', fg='yellow',
+                bg='black',command=lambda: keypress("/"), height=1, width=7) 
+divide.grid(row=6, column=3) 
+
+equal = Button(CalculatorWindow, text=' = ', fg='yellow',
+               bg='black',command=equalpress, height=1, width=7) 
+equal.grid(row=6, column=2) 
+
+clear = Button(CalculatorWindow, text='Clear', fg='yellow',
+               bg='black',command=clear, height=1, width=7) 
+clear.grid(row=7, column='0')
+
+decimal = Button(CalculatorWindow, text='.', fg='yellow',
+               bg='black',command=lambda: keypress("."), height=1, width=7) 
+decimal.grid(row=6, column='0')
+#Exit button
+btnExit = tkinter.Button(CalculatorWindow, text = "Exit here",fg = 'yellow',
+                         bg = 'black', command = close_window, height = 1, width = 7)
+btnExit.grid(row=0, column=0)
+#==========================================BUTTONS======================================= 
+
+# start the GUI 
+CalculatorWindow.mainloop() 
