@@ -1,0 +1,554 @@
+'''
+Write a card game called War. 
+
+Rules of War:
+
+	1. 4 cards dealt to each player.
+	2. 3 cards are faced down and one is faced up.
+	3. the largest faced up card wins
+		a. ace is largest card
+		b. face cards
+			1. jack is 11
+			2. queen is 12
+			3. king is 13
+			4. ace is 14
+	4. objective is to obtain all of the other players cards
+	5. joker option (not required for the program)
+	   the jokers will act as wild cards that can trump all 
+	   player cards.
+'''
+
+import random
+from random import shuffle
+import replit
+
+def shows_work():
+  #This just helps us create 4 deck of cards
+  deck_set = 13
+
+  add_sets1 = 0
+  add_sets2 = 0
+  add_sets3 = 0
+  add_sets4 = 0
+  deck = []
+
+  for x in range(deck_set):
+    add_sets1 += 1
+    add_sets2 += 1
+    add_sets3 += 1
+    add_sets4 += 1
+
+    deck.append(add_sets1)
+    deck.append(add_sets2)
+
+    deck.append(add_sets3)
+    deck.append(add_sets4)
+
+  print("\nDeck Unshuffled:",deck)
+
+  #We can use either random.shuffle command or shuffle.  It is the exact same thing.
+  shuffle(deck)
+  #This shows the deck after it is shuffled
+  print("\nShuffled Deck:",deck)
+
+  #This is player 1's hand.  The cards will be stored here
+  player1_hand = []
+
+  #For every number in the range of the FIRST HALF of the deck
+  for x in range(len(deck[:len(deck)//2])):
+    #Add those numbers to player1's hands
+    player1_hand.append(deck[x])
+    
+  #Then remove them from the deck using the pop method
+  for x in range(len(deck[:len(deck)//2])):
+    deck.pop(0)
+
+  #This is player 2's hands, the cards will be stored here.
+  player2_hand = []
+
+  #For every number in the range of the deck(only the other half is remaining since we already removed the first half on line 43)
+  for x in range(len(deck)):
+    #add the cards to player 2's hands
+    player2_hand.append(deck[x])
+
+  #THen remove them from the deck using the pop method
+  for x in range(len(deck)):
+    deck.pop(0)
+
+  #THis shows what each player has in their hands
+  print("\n\nPlayer one has these in their hands:",player1_hand,"\n\nPlayer two has these in their hands:",player2_hand)
+
+  #When starting the war, we will be using these war decks placing the card that started the war first, then the other cards in there and removing them from the hands.  Whoever winds gets everything in each war deck including the card that started the war
+  player1_war_deck = []
+  player2_war_deck = []
+
+#PROCES STARTS HERE
+  while True:
+    #STEP 1: Drawing the cards
+    #PLACE DOWN CARDS ON LINE 90 BY PRESSING ENTER
+    enter = input("\n==========================\nPress enter to draw a card\ntype x to exit out\n==========================\n")
+
+    #If the length of cards in player 1's hand and player 2's hands equals zero, then declare winner
+    if enter == 'x' or enter == 'X':
+      replit.clear()
+      print("Goodbye!\n")
+      fnControlCenter()
+
+    #If the length of cards in player 1's hand and player 2's hands equals zero, then declare winner
+    if not player1_hand and not player2_hand:
+      #STEP 3
+      #If player1 doens't have any remaining cards then the winner of the game is player 2
+      if not player1_hand:
+        print("The winner is player 2!")
+
+      #STEP 3
+      #If player2 doens't have remaining cards, then the winner of the game is player 1
+      elif not player2_hand:
+        print("The winner is player 1!")
+
+    #THIS DRAWS THE CARDS
+    elif len(player1_hand) and len(player2_hand) > 0:
+      player1_draw = player1_hand[0]
+      player2_draw = player2_hand[0]
+    
+    #This shows the players what they each have drawed
+    print("\n\nPlayer 1 has drawed:",player1_draw)
+    print("Player 2 has drawed:", player2_draw)
+
+    #STEP 2
+    #player 1
+    #elif player 1's draw is GREATER than player 2's draw.
+    if player1_draw > player2_draw:
+      print("\nPlayer 1 gets all the cards!")
+      #remove player 1's card from their hand and puts it in their own deck
+      player1_hand.append(player1_hand[0])
+      player1_hand.pop(0)
+      #Removes player 2's card from their hand and puts it in theplayer 1's deckir deck
+      player1_hand.append(player2_hand[0])
+      player2_hand.pop(0)
+        
+    #STEP 2
+    #Player 2
+    #Elif player 1's draw is LESS than player 2's draw
+    elif player1_draw < player2_draw:
+      print("Player 2 gets the cards!")
+      #remove that card from player 1's hand and puts it in player 2's deck
+      player2_hand.append(player1_hand[0])
+      player1_hand.pop(0)
+      #Removes player 2's card from their hand and puts it in their own deck
+      player2_hand.append(player2_hand[0])
+      player2_hand.pop(0)
+
+    #Step 2.1
+    #If both player's cards are the same number, then start a war.
+    elif player1_draw == player2_draw:
+      #Start the war defintion
+      def fnStartWar():
+        #The definition for player 1 to claim cards if they win the war
+        def fnPlayer1WarClaim():
+          #Add player 1's  card to their original deck
+          for x in range(len(player1_war_deck)):
+            player1_hand.append(player1_war_deck[x])
+            #Then add player 2's card to player 1's original deck
+            player1_hand.append(player2_war_deck[x])
+          #Then remove it from their own war deck
+          for x in range(len(player1_war_deck)):
+            player1_war_deck.pop(0)
+            #And remove that from player 2's war deck.
+            player2_war_deck.pop(0)
+          
+        #The definition to for player 2 to claim cards if they win the war
+        def fnPlayer2WarClaim():
+          #Add player 2's card to their original deck
+          for x in range(len(player2_war_deck)):
+            player2_hand.append(player2_war_deck[x])
+            #Then add player 1's card to player 2's own/original deck
+            player2_hand.append(player1_war_deck[x])
+          
+          #Then remove it from player 1's war deck
+          for x in range(len(player2_war_deck)):
+            player1_war_deck.pop(0)
+            #And remove that from their own war deck
+            player2_war_deck.pop(0)
+
+        #I made this into a definition so that we can just call it to use it multiply rather than using for loops/doing FOR X IN RANGE.
+        #If player 2 has more than 5 cards and player 1 has less than an X amount of cards
+        def fnIfLenP1LessThanXNumAndLenP2GreaterThan5():
+          player1_war_deck.append(player1_hand[0])
+          player1_hand.pop(0)
+          player1_war_deck.append(player2_hand[0])
+          player2_hand.pop(0)
+        
+        #I made this into a definition so that we can just call it to use it multiply rather than using for loops/doing FOR X IN RANGE.
+        #If player 1 has more than 5 cards and player 2 has less than an X amount of cards
+        def fnIfLenP1GreaterThan5andLenP2LessThanXNum():
+          player2_war_deck.append(player1_hand[0])
+          player2_hand.pop(0)
+          player2_war_deck.append(player2_hand[0])
+          player1_hand.pop(0)
+        
+        #I made this into a definition so that we can just call it to use it multiply rather than using for loops/doing FOR X IN RANGE.
+        #IF there are four cards in the war deck(Technically three since the first one is the one that started the war)
+        def fnIfHave4CardsInWarDeck():
+          # if 1st player1's number is larger, then all of the cards.
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          #Otherwise player2'snumber are larger, then they get all of the cards.
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-2] > player2_war_deck[-2]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-2] < player2_war_deck[-2]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-3] > player2_war_deck[-3]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-3] < player2_war_deck[-3]:
+            fnPlayer2WarClaim()
+          #If the last element of player 1's and 2's war deck matches each other, as well as the second to last,
+          elif player1_war_deck[-1] == player2_war_deck[-1] and player1_war_deck[-2] == player2_war_deck[-2] and player1_war_deck[-3] == player2_war_deck[-3]:
+              #For every number in the range of four, in this case, all the four cards inside of your war deck(used when both players have the same number) although we're wanting to remove from the hand so we remov the one from the hand to be able to add more if all of the cards are equal
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+
+        #If there are 3 cards in the war deck(technically 2 since the first one started the war)
+        def fnIfHave3CardsInWarDeck():
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-2] > player2_war_deck[-2]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-2] < player2_war_deck[-2]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-1] == player2_war_deck[-1] and player1_war_deck[-2] == player2_war_deck[-2] and player1_war_deck[-3] == player2_war_deck[-3]:
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+        
+        #If there are 2 cards in the war deck(technically 1 since the first one started the war)
+        def fnIfHave2CardsInWarDeck():
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-1] == player2_war_deck[-1]and player1_war_deck[-2] == player2_war_deck[-2]and player1_war_deck[-3] == player2_war_deck[-3]:
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+
+        #Step2.2
+        #Draw three cards and flip them over
+        print("\nStart War!\n")
+        enter = input("\n\n===============================================\nPress enter to draw three cards for each player\ntype x to exit out\n===============================================\n")
+
+        #If the length of cards in player 1's hand and player 2's hands equals zero, then declare winner
+        if enter == 'x' or enter == 'X':
+          replit.clear()
+          print("Goodbye!\n")
+          fnControlCenter()
+
+        if len(player1_hand) > 5 and len(player2_hand) > 5:
+          for x in range(4):
+            player1_war_deck.append(player1_hand[x])
+            player2_war_deck.append(player2_hand[x])
+
+          for x in range(4):
+            player1_hand.pop(0)
+            player2_hand.pop(0)
+          
+          
+
+          print("\n\nplayer 1 war deck:",player1_war_deck,"\nplayer 2 war deck:",player2_war_deck)
+
+          fnIfHave4CardsInWarDeck()
+
+        #If PLAYER NUMBER1 has less than 4 cards in their and 2nd player has more than 4 cards
+        elif len(player1_hand) < 5 and len(player2_hand) > 5:
+          #If player1 has < 3 cards in their hand and player 2 has > 4 cards
+          if len(player1_hand) < 4 and len(player2_hand) > 5:
+            #If player1 has < 2 cards in their hand and player 2 has > 4 cards
+            if len(player1_hand) < 3 and len(player2_hand) > 5:
+              #If player1 has < 1 card in their hand and player 2 has > 4 cards
+              if len(player1_hand) < 2 and len(player2_hand) > 5:
+                fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+                fnIfHave4CardsInWarDeck()
+              fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+              fnIfHave3CardsInWarDeck()
+            fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+            fnIfHave2CardsInWarDeck()
+          #fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+          print("Winner is player 2 since they have more cards and player 1 only has 1 card!")
+          
+          
+
+        #If PLAYER NUMBER2 has less than 4 cards in their and 1st player has more than 4 cards
+        elif len(player2_hand) < 5 and len(player1_hand) > 5:
+          #If player2 has < 3 cards in their hand and player 1 has > 4 cards
+          if len(player2_hand) < 4 and len(player1_hand) > 5:
+            #If player2 has < 2 cards in their hand and player 1 has > 4 cards
+            if len(player2_hand) < 3 and len(player1_hand) > 5:
+              #If player2 has < 1 card in their hand and player 1 has > 4 cards
+              if len(player2_hand) < 2 and len(player1_hand) > 5:
+                fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+                fnIfHave4CardsInWarDeck()
+              fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+              fnIfHave3CardsInWarDeck()
+            fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+            fnIfHave2CardsInWarDeck()
+          print("Winner is player 1 since they have more cards and player 2 only has 1 card!")
+
+      fnStartWar()
+    #THESE JUST HELPS ME UNDERSTANSD AND MAKE SURE THAT THE PROGRAM IS WORKING
+    print("\n________________________________________________\nPlayer one now has",player1_hand,"in their hand")
+
+    print("\nPlayer two now has",player2_hand,"in their hand")
+    print("\n________________________________________________\n")
+
+
+#THIS DEFINITION IS THE VERSION WHICH DOESN'T HAVE ANY COMMENTS OR DOESN'T SHOW ANY WORK ON THE SCREEN SUCH AS SHOWING WHAT EACH PLAYER HAS IN THEIR HANDS AFTER DRAWING AND RETRIEVING CARDS
+
+def show_no_work():
+  deck_set = 13
+
+  add_sets1 = 0
+  add_sets2 = 0
+  add_sets3 = 0
+  add_sets4 = 0
+  deck = []
+
+
+  for x in range(deck_set):
+    add_sets1 += 1
+    add_sets2 += 1
+    add_sets3 += 1
+    add_sets4 += 1
+
+    deck.append(add_sets1)
+    deck.append(add_sets2)
+
+    deck.append(add_sets3)
+    deck.append(add_sets4)
+
+  shuffle(deck)
+
+  player1_hand = []
+  for x in range(len(deck[:len(deck)//2])):
+    player1_hand.append(deck[x])
+    
+  for x in range(len(deck[:len(deck)//2])):
+    deck.pop(0)
+
+  player2_hand = []
+  for x in range(len(deck)):
+    player2_hand.append(deck[x])
+
+  for x in range(len(deck)):
+    deck.pop(0)
+
+  print("\n\nPlayer one has these in their hands:",player1_hand,"\n\nPlayer two has these in their hands:",player2_hand)
+  
+  player1_war_deck = []
+  player2_war_deck = []
+
+  while True:
+    enter = input("\n==========================\nPress enter to draw a card\ntype x to exit out\n==========================\n")
+    if enter == 'x' or enter == 'X':
+      replit.clear()
+      print("Goodbye!\n")
+      fnControlCenter()
+    elif len(player1_hand) and len(player2_hand) > 0:
+      player1_draw = player1_hand[0]
+      player2_draw = player2_hand[0]
+    
+    print("\n\nPlayer 1 has drawed:",player1_draw)
+    print("Player 2 has drawed:", player2_draw)
+    if player1_draw > player2_draw:
+      print("\nPlayer 1 gets all the cards!")
+      player1_hand.append(player1_hand[0])
+      player1_hand.pop(0)
+      player1_hand.append(player2_hand[0])
+      player2_hand.pop(0)
+
+    elif player1_draw < player2_draw:
+      print("Player 2 gets the cards!")
+      player2_hand.append(player1_hand[0])
+      player1_hand.pop(0)
+      player2_hand.append(player2_hand[0])
+      player2_hand.pop(0)
+    
+    elif player1_draw == player2_draw:
+      def fnStartWar():
+        def fnPlayer1WarClaim():
+          for x in range(len(player1_war_deck)):
+            player1_hand.append(player1_war_deck[x])
+            player1_hand.append(player2_war_deck[x])
+          for x in range(len(player1_war_deck)):
+            player1_war_deck.pop(0)
+            player2_war_deck.pop(0)
+        def fnPlayer2WarClaim():
+          for x in range(len(player2_war_deck)):
+            player2_hand.append(player2_war_deck[x])
+            player2_hand.append(player1_war_deck[x])
+          for x in range(len(player2_war_deck)):
+            player1_war_deck.pop(0)
+            player2_war_deck.pop(0)
+        def fnIfLenP1LessThanXNumAndLenP2GreaterThan5():
+          player1_war_deck.append(player1_hand[0])
+          player1_hand.pop(0)
+          player1_war_deck.append(player2_hand[0])
+          player2_hand.pop(0)
+        def fnIfLenP1GreaterThan5andLenP2LessThanXNum():
+          player2_war_deck.append(player1_hand[0])
+          player2_hand.pop(0)
+          player2_war_deck.append(player2_hand[0])
+          player1_hand.pop(0)
+        def fnIfHave4CardsInWarDeck():
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-2] > player2_war_deck[-2]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-2] < player2_war_deck[-2]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-3] > player2_war_deck[-3]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-3] < player2_war_deck[-3]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-1] == player2_war_deck[-1] and player1_war_deck[-2] == player2_war_deck[-2] and player1_war_deck[-3] == player2_war_deck[-3]:
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+        def fnIfHave3CardsInWarDeck():
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-2] > player2_war_deck[-2]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-2] < player2_war_deck[-2]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-1] == player2_war_deck[-1] and player1_war_deck[-2] == player2_war_deck[-2] and player1_war_deck[-3] == player2_war_deck[-3]:
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+        def fnIfHave2CardsInWarDeck():
+          if player1_war_deck[-1] > player2_war_deck[-1]:
+            fnPlayer1WarClaim()
+          elif player1_war_deck[-1] < player2_war_deck[-1]:
+            fnPlayer2WarClaim()
+          elif player1_war_deck[-1] == player2_war_deck[-1]and player1_war_deck[-2] == player2_war_deck[-2]and player1_war_deck[-3] == player2_war_deck[-3]:
+              for x in range(1):
+                player1_war_deck.append(player1_hand[x])
+                player2_war_deck.append(player2_hand[x])
+              for x in range(1):
+                player1_hand.pop(0)
+                player2_hand.pop(0)
+              fnStartWar()
+        print("\nStart War!\n")
+        enter = input("\n\n===============================================\nPress enter to draw three cards for each player\ntype x to exit out\n===============================================\n")
+        if enter == 'x' or enter == 'X':
+          replit.clear()
+          print("Goodbye!\n")
+          fnControlCenter()
+        if len(player1_hand) > 5 and len(player2_hand) > 5:
+          for x in range(4):
+            player1_war_deck.append(player1_hand[x])
+            player2_war_deck.append(player2_hand[x])
+          for x in range(4):
+            player1_hand.pop(0)
+            player2_hand.pop(0)
+          print("\n\nplayer 1 war deck:",player1_war_deck,"\nplayer 2 war deck:",player2_war_deck)
+          fnIfHave4CardsInWarDeck()
+        elif len(player1_hand) < 5 and len(player2_hand) > 5:
+          if len(player1_hand) < 4 and len(player2_hand) > 5:
+            if len(player1_hand) < 3 and len(player2_hand) > 5:
+              if len(player1_hand) < 2 and len(player2_hand) > 5:
+                fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+                fnIfHave4CardsInWarDeck()
+              fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+              fnIfHave3CardsInWarDeck()
+            fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+            fnIfHave2CardsInWarDeck()
+          #fnIfLenP1LessThanXNumAndLenP2GreaterThan5()
+          print("Winner is player 2 since they have more cards and player 1 only has 1 card!")
+        elif len(player2_hand) < 5 and len(player1_hand) > 5:
+          if len(player2_hand) < 4 and len(player1_hand) > 5:
+            if len(player2_hand) < 3 and len(player1_hand) > 5:
+              if len(player2_hand) < 2 and len(player1_hand) > 5:
+                fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+                fnIfHave4CardsInWarDeck()
+              fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+              fnIfHave3CardsInWarDeck()
+            fnIfLenP1GreaterThan5andLenP2LessThanXNum()
+            fnIfHave2CardsInWarDeck()
+          print("Winner is player 1 since they have more cards and player 2 only has 1 card!")
+      fnStartWar()
+
+
+
+def fnControlCenter():
+  replit.clear()
+  print("          _____                    _____                    _____          ")
+  print("         /\    \                  /\    \                  /\    \         ")
+  print("        /::\____\                /::\    \                /::\    \        ")
+  print("       /:::/    /               /::::\    \              /::::\    \       ")
+  print("      /:::/   _/___            /::::::\    \            /::::::\    \      ")
+  print("     /:::/   /\    \          /:::/\:::\    \          /:::/\:::\    \     ")
+  print("    /:::/   /::\____\        /:::/__\:::\    \        /:::/__\:::\    \    ")
+  print("   /:::/   /:::/    /       /::::\   \:::\    \      /::::\   \:::\    \   ")
+  print("  /:::/   /:::/   _/___    /::::::\   \:::\    \    /::::::\   \:::\    \  ")
+  print(" /:::/___/:::/   /\    \  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\____\ ")
+  print("|:::|   /:::/   /::\____\/:::/  \:::\   \:::\____\/:::/  \:::\   \:::|    |")
+  print("|:::|__/:::/   /:::/    /\::/    \:::\  /:::/    /\::/   |::::\  /:::|____|")
+  print(" \:::\/:::/   /:::/    /  \/____/ \:::\/:::/    /  \/____|:::::\/:::/    / ")
+  print("  \::::::/   /:::/    /            \::::::/    /         |:::::::::/    /  ")
+  print("   \::::/___/:::/    /              \::::/    /          |::|\::::/    /   ")
+  print("    \:::\__/:::/    /               /:::/    /           |::| \::/____/    ")
+  print("     \::::::::/    /               /:::/    /            |::|  ~|          ")
+  print("      \::::::/    /               /:::/    /             |::|   |          ")
+  print("       \::::/    /               /:::/    /              \::|   |          ")
+  print("        \::/____/                \::/    /                \:|   |          ")
+  print("         ~~                       \/____/                  \|___|          ")
+                                                                           
+  print("\nJustin Moua\nAdvanced Programming\n4th Hour\n")
+  which = int(input("My Rules:\n1) 1 is the lowest, 13 is the highest\n2) Winning cards go behind your hands\n3) If you are in a war & have no more cards in your hands, then you lose.\n\nWould you like me to\n1. Show work\n2. Show no work\n3. Leave\n\nEnter here:"))
+
+
+  if which == 1:
+    replit.clear()
+    shows_work()
+
+  elif which == 2:
+    replit.clear()
+    show_no_work()
+
+  elif which == 3:
+    replit.clear()
+    print("\n\nGoodbye! :)")
+  else:
+    replit.clear()
+    print("Invalid Input!\n")
+    fnControlCenter()
+fnControlCenter()
