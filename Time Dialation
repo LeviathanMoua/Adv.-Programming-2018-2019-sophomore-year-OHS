@@ -1,0 +1,70 @@
+'''
+Instructions from your teacher:
+No instructions for this assignment
+'''
+
+import tkinter
+import tkinter as tki
+import tkinter as tk
+from tkinter import *
+
+window = Tk()
+window.title('Time Dilation')
+window.geometry('750x400')
+window.configure(background='light yellow')
+
+text = Text(window)
+
+
+
+def calculation():
+    time = int(entryTime.get())
+    velocity = int(entryVelocity.get())
+    
+    print('time:',time, 'velocity:',velocity)
+    '''
+    print(type(time))
+    print(type(velocity))
+    '''
+
+    velocitySquared = (velocity*velocity)
+    c = 186000**2
+
+    velocityDividedBySpeedOfLight = velocitySquared / c
+
+    minusVelocityAndSpeedOfLight = 1 - velocityDividedBySpeedOfLight
+
+    sqrt = minusVelocityAndSpeedOfLight**0.5
+
+
+    divide_and_answer = time/sqrt
+
+    print(divide_and_answer)
+
+    answer=tki.Label(text=("Answer:",divide_and_answer),fg='black',bg='light yellow',font=('Times New Roman',10))
+    answer.place(x=40,y=180)
+    
+
+equation = StringVar()
+
+entryTime=tki.Entry(window,fg='black',width=20,bg='white',font=('Times New Roman',16),justify='left')
+entryTime.place(x=40,y=40)
+
+
+entryVelocity=tki.Entry(window,fg='black',width=20,bg='white',font=('Times New Roman',16),justify='left')
+entryVelocity.place(x=40,y=100)
+
+
+TextLabel=tki.Label(text="Time",fg='white',bg='black',font=('Times New Roman',10))
+TextLabel.place(x=40,y=20)
+
+VelocityLabel=tki.Label(text="Velocity",fg='white',bg='black',font=('Times New Roman',10))
+VelocityLabel.place(x=40,y=80)
+
+buttonCalculate = Button(window,text = "Calculate", fg = 'black', width = 10, bg = 'white', font = ('Times New Roman', 16), justify = 'left'
+                            ,command = lambda: calculation())
+buttonCalculate.place(x = 60, y = 140)
+
+
+
+
