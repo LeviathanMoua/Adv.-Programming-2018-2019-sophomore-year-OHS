@@ -1,0 +1,280 @@
+'''
+Instructions from your teacher:
+Write a program that will allow a user to enter 4 names and show graphs from 1910 to 2017.
+'''
+
+'''
+# importing the required module 
+import matplotlib.pyplot as plt 
+import pylab 
+import warnings
+import matplotlib.cbook
+warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
+
+
+#Example of Bertha...
+# x axis values 
+x = [1910,1920,1930,1940,1950,1960]
+#Example of Ann...
+x1 = [1910,1920,1930,1940,1950,1960,1970,1980]
+
+# Bertha corresponding y axis values 
+y = [71,141,63,42,10,8]
+# Ann corresponding y axis values 
+y1 = [171,121,60,40,30,18,10,5]
+  
+# naming the x axis 
+plt.xlabel('Years') 
+# naming the y axis 
+plt.ylabel('Count') 
+  
+# giving a title to my graph 
+plt.title('Baby Names') 
+
+# plotting the points  
+plt.plot(x, y)
+plt.plot(x1, y1)
+
+ax = plt.subplot(111)
+ax.plot(x, y, label='Bertha')
+ax.plot(x1, y1, label='Ann')
+ax.legend()
+
+ 
+# function to show the plot 
+plt.show() 
+'''
+
+#MINE
+
+# importing the required module 
+# importing the required module 
+import matplotlib.pyplot as plt 
+import pylab 
+import warnings
+import matplotlib.cbook
+import sqlite3
+warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
+
+#ABOUT 114900 LINES
+
+conn = sqlite3.connect("dbBabyNames.db")
+c = conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS tblBabyNames(State CHAR(2), Gender CHAR(1), Year INT, Name TEXT, Amount INT)")
+fileBabyNames = 'H:/baby_names_txt_file.txt'
+fileNames = open(fileBabyNames,'r')
+
+
+def funInsertingNames():
+    line=''
+    fileNames = open(fileBabyNames,'r')
+    #THIS IS HOW MANY NAMES THAT YOU WANT TO ADD TO THE DATABASE
+    for x in range(5000):
+        arrNames = fileNames.readline().split(",")
+        strState = arrNames[0]
+        strGender = arrNames[1]
+        intYear = int(arrNames[2])
+        strName = arrNames[3]
+        intAmount = arrNames[4]
+        arrAmount = intAmount.split("\\")
+        intAmount = int(arrAmount[0])
+        c.execute("INSERT INTO tblBabyNames(State, Gender, Year, Name, Amount) VALUES(:insState, :insGender, :insYear, :insName, :insAmount)", {'insState':strState,'insGender':strGender,'insYear':intYear,'insName':strName,'insAmount':intAmount})
+        conn.commit()
+
+#COMMENT THIS OUT AFTER ADDING TO THE DATABASE SO YOU AREN'T RE-ADDING THE NAMES
+funInsertingNames()
+
+
+def get_posts():
+    c.execute("SELECT * FROM tblbabyNames")
+
+    #COMMENT THE LINE BELOW SO THAT THE PROGRAM DOESN'T LAG MUCH
+    print(c.fetchall())
+    print("Everything above this is just a way for me to debug the program.  You can check line 42 and comment it out if you do not want this.")
+get_posts()
+
+inpBabyName1 = input("\n\nPlease enter the  first baby name(Make sure to Capitolize the first letter! Also, comment out line 22 after the first use.:")
+
+inpBabyName2 = input("Please enter the second baby name(Make sure to Capitolize the first letter! Also, comment out line 22 after the first use.:")
+
+inpBabyName3 = input("Please enter the third baby name(Make sure to Capitolize the first letter! Also, comment out line 22 after the first use.:")
+
+inpBabyName4 = input("Please enter the fourth  baby name(Make sure to Capitolize the first letter! Also, comment out line 22 after the first use.:")
+
+
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName1,))
+findAllBabyName1 = c.fetchone()
+
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName2,))
+findAllBabyName2 = c.fetchone()
+     
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName3,))
+findAllBabyName3 = c.fetchone()
+     
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName4,))
+findAllBabyName4 = c.fetchone()
+
+#If the babynames that were asked in the input are found in the database
+#then continue on.  Otherwise go down to the else statement.
+if findAllBabyName1[0] == 1 and findAllBabyName2[0] == 1 and findAllBabyName3[0] == 1 and findAllBabyName4[0] == 1:#If the number is in the table
+#Then print out the babynames
+  sql = "SELECT * FROM tblBabyNames WHERE Name=?"
+  c.execute(sql,(str(inpBabyName1),))
+  BabyNameInfo1 = c.fetchall()
+
+  #This just helps us debug the program.  Appearntly,
+  #the whole information of the babyname was added as a whole
+  #rather than an actual array.
+  #So that's why down below in the year and count, we turn them into arrays
+  #In which we can retrieve the year and the count of the baby name.
+  print("HAHAHA")
+  print(BabyNameInfo1)
+  print("HAHAHA")
+  
+  #Year
+  x1=[]
+  #Count
+  y1=[]
+  for x in range(len(BabyNameInfo1)):
+      x1.append(BabyNameInfo1[x][2])
+      y1.append(BabyNameInfo1[x][4])
+  print("This is babyname1's year:",x1)
+  #Count
+  print("This is babyname1's name occurence in the year above:",y1)
+
+  
+  '''
+  c.execute(sql,(str(inpBabyName2),))
+  BabyNameInfo2 = c.fetchall()
+  #Year
+  x2 = [BabyNameInfo2[0][2]]
+  #Count```````
+  y2 = [BabyNameInfo2[0][4]]
+  '''
+
+
+  c.execute(sql,(str(inpBabyName2),))
+  BabyNameInfo2 = c.fetchall()
+  
+  #Year
+  x2=[]
+  #Count
+  y2=[]
+  for x in range(len(BabyNameInfo2)):
+      x2.append(BabyNameInfo2[x][2])
+      y2.append(BabyNameInfo2[x][4])
+  print("\nThis is babyname2's year:",x2)
+  #Count
+  print("This is babyname2's name occurence in the year above:",y2)
+
+
+  '''
+  c.execute(sql,(str(inpBabyName3),))
+  BabyNameInfo3 = c.fetchall()
+  #Year
+  x3 = [BabyNameInfo3[0][2]]
+  #Count
+  y3 = [BabyNameInfo3[0][4]]
+  '''
+  c.execute(sql,(str(inpBabyName3),))
+  BabyNameInfo3 = c.fetchall()
+  
+  #Year
+  x3=[]
+  #Count
+  y3=[]
+  for x in range(len(BabyNameInfo3)):
+        
+      x3.append(BabyNameInfo3[x][2])
+      y3.append(BabyNameInfo3[x][4])
+  print("\nThis is babyname3's year:",x3)
+  #Count
+  print("This is babyname3's name occurence in the year above:",y3)
+
+
+  '''
+  c.execute(sql,(str(inpBabyName4),))
+  BabyNameInfo4 = c.fetchall()
+  #Year
+  x4 = [BabyNameInfo4[0][2]]
+  #Count
+  y4 = [BabyNameInfo4[0][4]]
+  '''
+
+  c.execute(sql,(str(inpBabyName4),))
+  BabyNameInfo4 = c.fetchall()
+  
+  #Year
+  x4=[]
+  #Count
+  y4=[]
+  for x in range(len(BabyNameInfo4)):
+        
+      x4.append(BabyNameInfo4[x][2])
+      y4.append(BabyNameInfo4[x][4])
+  print("\nThis is babyname4's year:",x4)
+  #Count
+  print("This is babyname4's name occurence in the year above:",y4)
+  
+
+  #This basically helps us debug the program
+  #this just checks to make suire that the variables equal what aI want them to be. 
+  '''
+  for x in range(len(BabyNameInfo1)):
+    print(BabyNameInfo1[x])
+    
+  for x in range(len(BabyNameInfo2)):
+    print(BabyNameInfo2[x])
+
+  for x in range(len(BabyNameInfo3)):
+    print(BabyNameInfo3[x])
+
+  for x in range(len(BabyNameInfo4)):
+    print(BabyNameInfo4[x])
+   '''     
+  # naming the x axis 
+  plt.xlabel('Years') 
+  # naming the y axis 
+  plt.ylabel('Count') 
+
+
+  #Title of the graph 
+  plt.title('Baby Names') 
+
+
+
+  #baby1
+  plt.plot(x1, y1, color='r')
+
+
+  #baby2
+  plt.plot(x2,y2, color='g')
+
+  #baby3
+  plt.plot(x3, y3, color='b')
+
+  #baby4
+  plt.plot(x4, y4, color='k')
+
+
+  #ax = plt.subplot(111)
+  #ax.plot(x, y, label='Bertha')
+  #ax.plot(x1, y1, label='Ann')
+  #ax.legend()
+
+  # function to show the plot 
+  plt.show() 
+   
+
+#Tell the user that the babyname isn't in the table.     
+else:
+    print ("Baby name not in table")
+
+
+
+
+haha = input("Hello")
+
+
+#X axis values = years`
+#Y axis = Count Values
