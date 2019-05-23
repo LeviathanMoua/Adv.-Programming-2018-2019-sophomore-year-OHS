@@ -1,0 +1,54 @@
+'''
+Instructions from your teacher:
+
+Write a Python function that takes a number as a parameter and check the number is prime or not.  Find all the prime numbers from 1 to 100.
+
+Note : A prime number (or a prime) is a natural number greater than 1 and that has no positive divisors other than 1 and itself.
+'''
+
+#Code:
+
+
+numbers = 2
+while numbers < 101:
+  if numbers == 2 or numbers == 3 or numbers == 5 or numbers == 7:
+    print(numbers)
+    numbers+=1
+  elif numbers%2==0 or numbers%3==0 or numbers%5==0 or numbers%7==0:
+    numbers+=1
+  else:
+    print(numbers)
+    numbers+=1
+
+
+'''
+is_it_prime = int(input("Enter a number to check if it's prime.\n\nTrue = Prime False = Composite.\n\nEnter here:"))
+
+numbers = 2
+while numbers < 101:
+  if numbers == 2 or numbers == 3 or numbers == 5 or numbers == 7:
+    print(numbers)
+    numbers+=1
+  elif numbers%2==0 or numbers%3==0 or numbers%5==0 or numbers%7==0:
+    numbers+=1
+  else:
+    print(numbers)
+    numbers+=1
+ '''   
+
+    
+
+
+'''
+a = int(input("Please insert a number"))
+
+if a % 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 == 0:
+  print("This is a composite number")
+else:
+  print("This is a prime number")
+
+'''
+'''
+If I enter the number two, the program is going to say that 
+it's composite because two can be divisble by two
+'''
