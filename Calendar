@@ -1,0 +1,634 @@
+'''
+Instructions from your teacher:
+  
+Part 1: Scrolling Calendar
+Using 
+import calendar
+import datetime
+import time
+Create a scrolling calendar.
+Part 2: DateDiff function
+Create a function that will find the difference between 2 dates,
+DateDiff ( interval, date1, date2)
+Will return an integer.
+
+Setting/Description
+yyyy
+Year
+q
+Quarter
+m
+Month
+y
+Day of year
+d
+Day
+w
+Weekday
+ww
+Week
+h
+Hour
+n
+Minute
+s
+Second
+
+Part 3:  
+DateAdd Function will return a date 
+DateAdd ( interval, number, date )
+Intervals
+yyyy
+Year
+
+q
+Quarter
+
+m
+Month
+
+y
+Day of year
+
+d
+Day
+
+w
+Weekday
+
+ww
+Week
+
+h
+Hour
+
+n
+Minute
+
+s
+Second
+'''
+
+
+import replit
+import sys
+import calendar
+import datetime
+import time
+from datetime import datetime
+from datetime import datetime as dt
+from datetime import timedelta
+
+#Today gives you the exact year month day hour minute second and milisecond
+
+#RETREIVING THE TIMES
+
+today = datetime.today()
+year = datetime.today().year
+month = datetime.today().month
+day = datetime.today().day
+hour = datetime.today().hour
+minute = datetime.today().minute
+second = datetime.today().second
+datem = datetime(today.year, today.month, 3)
+
+
+def fnCalendar():
+  replit.clear()
+  #TIME VARIABLES
+  current_year = (year)
+  current_month = (month)
+  current_day = (day)
+  current_hour = (hour)
+  current_minute = (minute)
+  current_second = (second)
+
+#User input to scroll through the calannder
+  print(calendar.month(current_year,current_month))
+
+#User input asking whether to go backwards or forwards
+  while True:
+    user_input = input("Click X then enter to exit.  Click D then enter to scroll left.  Click A then to scroll right").lower()
+    
+
+  #LEFT KEY
+    if user_input == 'a'.lower():
+      #Subtract one since the letter A is asking the callander to go backwards
+      current_month = (current_month -1)
+
+      #If the number goes below zero, then go backwards to december since there is no month that represents zero.  Also change the year to the previous year as well
+      if current_month <= 0:
+        current_month = (12)
+        current_year = (current_year - 1)
+        replit.clear()
+        print("")
+        print(calendar.month(current_year,current_month))
+
+      #IF it doesn't then just pirnt it normally
+      else:
+        replit.clear()
+        print("")
+        print(calendar.month(current_year,current_month))
+
+    #RIGHT KEY
+    elif user_input == 'd'.lower():
+      #Add one since the suer is asking the calander to go forward
+      current_month = (current_month + 1)
+
+      #IF the number exceeds further than twelve, then go back to one so that it will be january snce there are no existing months for 13.  Also change the year to the next year as well.
+      if current_month > 12:
+        current_month = (1)
+        current_year = (current_year + 1)
+        replit.clear()
+        print("")
+        print(calendar.month(current_year,current_month))
+
+      #If it doesn't then just print it normally.
+      else:
+        replit.clear()
+        print("")
+        print(calendar.month(current_year,current_month))
+    elif user_input == 'x'.lower():
+      replit.clear()
+      fnControlCenter()
+      
+    else:
+      def delay_print(s):
+        for c in s:
+          sys.stdout.write( '%s' % c )
+          sys.stdout.flush()
+          time.sleep(0.05)
+      delay_print("Invalid input! Refreshing...Going back to recent month....\n")
+      fnCalendar()
+# Make variables for the user to enter the date then append them to date1 and date2
+
+
+
+# Make variables for the user to enter the date then append them to date1 and date2
+
+
+def funDateDiff():
+  # This is just the inputs
+  Today = input("-----------------------------------------------\nWould you like to use today as your first date?\nY for yes\nN for no\nEnter here: ").upper()
+  print("-----------------------------------------------\n\n\n=================================================================")
+  if Today == 'Y':
+    intYear, intMonth, intDay, intHour, intMinute, intSecond = time.strftime("%Y,%m,%d,%H,%M,%S").split(',')
+    intYear = int(intYear)
+    intMonth = int(intMonth)
+    intDay = int(intDay)
+    intHour = int(intHour)
+    intMinute = int(intMinute)
+    intSecond = int(intSecond)
+  elif Today == 'N':
+    intYear = int(input("Please enter the year\n(Must be a number and not a word)\n\nEnter here: "))  
+    intMonth = int(input("\nPlease enter the month\n(Must be a number and not a word)\n\nEnter here: "))
+    #This is to make sure you put in an actual month
+    if intMonth < 1 or intMonth > 12:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+    intDay = int(input("\nPlease enter the day\n(Must be a number and not a word)\n\nEnter here: "))
+    #This is to make sure the day you inputed is actually in the month, so you don't type November 31st or January -1st
+    #The first if statement is for January, March, May, July, August, October, and December
+    if intMonth == 1 or intMonth == 3 or intMonth == 5 or intMonth == 7 or intMonth == 8 or intMonth == 10 or intMonth == 12:
+      if intDay < 1 or intDay > 31:
+        print("\nInvalid Input, please try again")
+        funDateDiff()
+    #The second if statement if for April, June September, and November
+    elif intMonth == 4 or intMonth == 6 or intMonth == 8 or intMonth == 11:
+      if intDay < 1 or intDay > 30:
+        print("\nInvalid Input, please try again")
+        funDateDiff()
+    #This third if statement if for February
+    elif intMonth == 2:
+      #This checks if it as a leap year or not
+      if intYear%4 == 0 and intYear&100!=0:
+        if intDay < 1 or intDay > 29:
+          print("\nInvalid Input, please try again")
+          funDateDiff()
+      else:
+        if intDay < 1 or intDay > 28:
+          print("\nInvalid Input, please try again")
+          funDateDiff()
+    intHour = int(input("\nPlease enter the hour\n(1-24)\nEnter here: "))
+    if intHour < 1 or intHour > 24:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+    intMinute = int(input("\nPlease enter the minute\n(1-59)\nEnter here: "))
+    if intMinute < 1 or intMinute > 59:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+    intSecond = int(input("\nPlease enter the second\n(1-59)\nEnter here: "))
+    if intSecond < 1 or intSecond > 59:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+
+  print("=================================================================")
+  intYear2 = int(input("\nPlease enter the second year\n(Must be a number and not a word and must be later then the first year)\n\nEnter here: "))
+  if intYear2 < intYear:
+    print("\nInvalid Input, please try again")
+    funDateDiff()
+  intMonth2 = int(input("\nPlease enter the second month\n(Must be number and not a word)\n\nEnter here: "))
+  if intMonth2 < 1 or intMonth2 > 12:
+    print("\nInvalid Input, please try again")
+    funDateDiff()
+  intDay2 = int(input("\nPlease enter the second day(Must be a number and not a word)\n\nEnter here: "))
+  if intMonth2 == 1 or intMonth2 == 3 or intMonth2 == 5 or intMonth2 == 7 or intMonth2 == 8 or intMonth2 == 10 or intMonth2 == 12:
+    if intDay2 < 1 or intDay2 > 31:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+  elif intMonth2 == 4 or intMonth2 == 6 or intMonth2 == 8 or intMonth2 == 11:
+    if intDay2 < 1 or intDay2 > 30:
+      print("\nInvalid Input, please try again")
+      funDateDiff()
+  elif intMonth2 == 2:
+    if intYear2%4 == 0 and intYear2%100!=0:
+      if intDay2 < 1 or intDay2 > 29:
+        print("\nInvalid Input, please try again")
+        funDateDiff()
+    else: 
+      if intDay2 < 1 or intDay2 > 28:
+        print("\nInvalid Input, please try again")
+        funDateDiff()
+  intHour2 = int(input("\nPlease enter the second hour\n(1-24)\n\nEnter here: "))
+  if intHour2 < 1 or intHour2 > 24:
+    print("\nInvalid Input, please try again")
+    funDateDiff()
+  intMinute2 = int(input("\nPlease enter the second minute\n(1-60)\n\nEnter here: "))
+  if intMinute2 < 1 or intMinute2 > 60:
+    print("\nInvalid Input, please try again")
+    funDateDiff()
+  intSecond2 = int(input("\nPlease enter the second second\n(1-60)\n\nEnter here: : "))
+  if intSecond2 < 1 or intSecond2 > 60:
+    print("\nInvalid Input, please try again")
+    funDateDiff()
+  print("=================================================================")
+
+
+
+
+
+
+  #This is where the subtraction starts
+  #This does the actual subtracting
+  intYearDiff = intYear2 - intYear
+  intMonthDiff = intMonth2 - intMonth
+  intDayDiff = intDay2 - intDay
+  intHourDiff = intHour2 - intHour
+  intMinuteDiff = intMinute2 - intMinute
+  intSecondDiff = intSecond2 - intSecond
+  #This transfers a year into 12 months if needed
+  if intMonthDiff < 1:
+    if intYearDiff > 0:
+      intYearDiff-=1
+      intMonthDiff+=12
+    else:
+      print("\nYour first year is bigger than your second year, cannot calculate! Try again!")
+      funDateDiff()
+  intMonthToDay = intMonth+intMonthDiff
+  if intMonthToDay > 12:
+    intMonthToDay-=12
+
+  #This transfers a month into the amount of days from that month if needed, and then also turns a year into a month if this puts it before January
+  if intDayDiff < 1:
+    intMonthDiff-=1
+    if intMonthDiff < 1: 
+      if intYearDiff > 0:
+        intYearDiff-=1
+        intMonthDiff+=12
+      else:
+        print("\nYour first year is bigger than your second year, cannot calculate! Try again!")
+        funDateDiff()
+    if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+      intDayDiff+=31
+    elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+      intDayDiff+=30
+    elif intMonthToDay == 2:
+      if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+        intDayDiff+=29
+      else:
+        intDayDiff+=28
+
+  #Days into hours
+  if intHourDiff < 1:
+    intDayDiff-=1
+    intHourDiff+=24
+    if intDayDiff < 1:
+      intMonthDiff-=1
+      if intMonthDiff < 1: 
+        if intYearDiff > 0:
+          intYearDiff-=1
+          intMonthDiff+=12
+        else:
+          print("\nYour first year is bigger than your second year, cannot calculate! Try again!")
+        funDateDiff()
+      if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+        intDayDiff+=31
+      elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+        intDayDiff+=30
+      elif intMonthToDay == 2:
+        if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+          intDayDiff+=29
+        else:
+          intDayDiff+=28
+
+  #Hours into minutes
+  if intMinuteDiff < 1:
+    intHourDiff-=1
+    intMinuteDiff+=59
+    if intHourDiff < 1:
+      intDayDiff-=1
+      intHourDiff+=24
+      if intDayDiff < 1:
+        intMonthDiff-=1
+        if intMonthDiff < 1: 
+          if intYearDiff > 0:
+            intYearDiff-=1
+            intMonthDiff+=12
+          else:
+            print("\nYour first year is bigger than your second year, cannot calculate! Try again!")
+        funDateDiff()
+        if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+          intDayDiff+=31
+        elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+          intDayDiff+=30
+        elif intMonthToDay == 2:
+          if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+            intDayDiff+=29
+          else:
+            intDayDiff+=28
+
+  #Minutes into seconds
+  if intSecondDiff < 1:
+    intMinuteDiff-=1
+    intSecondDiff+=59
+    if intMinuteDiff < 1:
+      intHourDiff-=1
+      intMinuteDiff+=59
+      if intHourDiff < 1:
+        intDayDiff-=1
+        intHourDiff+=24
+        if intDayDiff < 1:
+          intMonthDiff-=1
+          if intMonthDiff < 1: 
+            if intYearDiff > 0:
+              intYearDiff-=1
+              intMonthDiff+=12
+            else:
+              print("\nYour first year is bigger than your second year, cannot calculate! Try again!")
+          funDateDiff()
+          if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+            intDayDiff+=31
+          elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+            intDayDiff+=30
+          elif intMonthToDay == 2:
+            if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+              intDayDiff+=29
+            else:
+              intDayDiff+=28
+  
+
+
+
+
+
+
+  #This is where it starts printing out the dates
+  #This is a table to ask them what they want their leading thing to be. For example if they type mo it will give them months, days, hours, minutes, and seconds, but will leave out years
+  print("\n\n________________\nIntervals\ny = Year\nm = Month\nd = Day\nh = Hour\nmi = Minute\ns = Second\n________________")
+
+  strInterval = input("\n_______________________________________________\nPlease enter the setting of the interval: ").lower()
+
+
+  if strInterval == "y":
+    print("Your second date is in:\n" + str(intYearDiff) + " years,\n" + str(intMonthDiff) + " months,\n" + str(intDayDiff) + " days,\n" + str(intHourDiff) + " hours,\n" + str(intMinuteDiff) + " minutes,\nand " + str(intSecondDiff) + " seconds")
+    Again = input("\nWould you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+      
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  elif strInterval == "m".lower():
+    if intYearDiff > 0:
+      intMonthDiff = intMonthDiff + intYearDiff*12
+    print("Your second date is in:\n" + str(intMonthDiff) + " months,\n" + str(intDayDiff) + " days,\n" + str(intHourDiff) + " hours,\n" + str(intMinuteDiff) + " minutes,\nand " + str(intSecondDiff) + " seconds")
+    Again = input("\nWould you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  elif strInterval == "d".lower():
+    if intYearDiff > 0:
+      intMonthDiff = intMonthDiff + intYearDiff*12
+    if intMonthDiff > 0:
+      for x in range(intMonthDiff):
+        if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+          intDayDiff+=31
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+          intDayDiff+=30
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 2:
+          if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+            intDayDiff+=29
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+          else:
+            intDayDiff+=28
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+    print("Your second date is in:\n" + str(intDayDiff) + " days,\n" + str(intHourDiff) + " hours,\n" + str(intMinuteDiff) + " minutes,\nand " + str(intSecondDiff) + " seconds")
+    Again = input("\nWould you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  elif strInterval == "h".lower():
+    if intYearDiff > 0:
+      intMonthDiff = intMonthDiff + intYearDiff*12
+    if intMonthDiff > 0:
+      for x in range(intMonthDiff):
+        if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+          intDayDiff+=31
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+          intDayDiff+=30
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 2:
+          if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+            intDayDiff+=29
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+          else:
+            intDayDiff+=28
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+    if intDayDiff > 0:
+      intHour = intHourDiff + intDayDiff*24
+    print("Your second date is in:\n" + str(intHourDiff) + " hours,\n" + str(intMinuteDiff) + " minutes,\nand " + str(intSecondDiff) + " seconds")
+    Again = input("\nWould you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  elif strInterval == "mi".lower():
+    if intYearDiff > 0:
+      intMonthDiff = intMonthDiff + intYearDiff*12
+    if intMonthDiff > 0:
+      for x in range(intMonthDiff):
+        if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+          intDayDiff+=31
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+          intDayDiff+=30
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 2:
+          if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+            intDayDiff+=29
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+          else:
+            intDayDiff+=28
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+    if intDayDiff > 0:
+      intHour = intHourDiff + intDayDiff*24
+    if intHourDiff > 0:
+      intMinuteDiff = intMinuteDiff + intHourDiff*60
+    print("Your second date is in:\n" + str(intMinuteDiff) + " minutes,\nand " + str(intSecondDiff) + " seconds")
+    Again = input("\nWould you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  elif strInterval == "s".lower():
+    if intYearDiff > 0:
+      intMonthDiff = intMonthDiff + intYearDiff*12
+    if intMonthDiff > 0:
+      for x in range(intMonthDiff):
+        if intMonthToDay == 1 or intMonthToDay == 3 or intMonthToDay == 5 or intMonthToDay == 7 or intMonthToDay == 8 or intMonthToDay == 10 or intMonthToDay == 12:
+          intDayDiff+=31
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 4 or intMonthToDay == 6 or intMonthToDay == 9 or intMonthToDay == 11:
+          intDayDiff+=30
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+        elif intMonthToDay == 2:
+          if (intYear+intYearDiff)%4==0 and (intYear+intYearDiff)%100!=0:
+            intDayDiff+=29
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+          else:
+            intDayDiff+=28
+          if intMonthToDay < 12:
+            intMonthToDay += 1
+          elif intMonthToDay == 12:
+            intMonthToDay = 1
+    if intDayDiff > 0:
+      intHour = intHourDiff + intDayDiff*24
+    if intHourDiff > 0:
+      intMinuteDiff = intMinuteDiff + intHourDiff*60
+    if intMinuteDiff > 0:
+      intSecondDiff = intSecondDiff + intMinuteDiff*60
+    print("Your second date is in:\n" + str(intSecondDiff) + " seconds")
+    Again = input("\n you like to enter two more dates?\nY for yes\nN for no\nEnter here: ").upper()
+    if Again == 'Y':
+      funDateDiff()
+    elif Again == 'N':
+      replit.clear()
+      print("Thank you for using our code!")
+      fnControlCenter()
+    else:
+      print("Invalid input, assuming you wish to stop the code")
+
+  else:
+    print("Invalid input!")
+
+
+
+
+
+
+
+
+
+
+def fnControlCenter():
+  which = input("Calendar or DateDiff? Type x then enter to end:").upper()
+  
+  if which == "Calendar".upper():
+    replit.clear()
+    fnCalendar()
+  elif which == "DateDiff".upper():
+    replit.clear()
+    funDateDiff()
+  
+  elif which == "x".upper():
+    print("Bye!")
+  else:
+    print("Invald input!")
+    fnControlCenter()
+  
+  
+fnControlCenter()
