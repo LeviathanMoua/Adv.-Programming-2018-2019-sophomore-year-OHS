@@ -1,0 +1,33 @@
+'''
+Instructions from your teacher:
+No instructions for this assignment
+
+MY NOTES:
+  Teacher obviously didn't put any instructions, adn this was from 2018 which
+  was half a year ago from this written comment.  Though i am assuming
+  this study guide/note shows us how to
+  do certain things such as creating, inserting, etc in a sqlite3 database for python
+'''
+import sqlite3
+conn = sqlite3.connect('invoice.db')
+c = conn.cursor()
+
+def Create_PassWord_Table():
+  c.execute('CREATE TABLE IF NOT EXISTS Password (ID INT, Password char(10))')
+
+def Password_data():
+  c.execute("INSERT INTO Password(ID,Password) VALUES(4,'HELLO4'),(5,'Hello2'),(6,'Hello2')")
+  conn.commit()
+
+def Read_Data():
+  c.execute("SELECT * FROM Password")
+  for row in c.fetchall():
+    print(row)
+
+Create_PassWord_Table()
+Password_data()
+Read_Data()
+
+c.close()
+conn.close()
+
