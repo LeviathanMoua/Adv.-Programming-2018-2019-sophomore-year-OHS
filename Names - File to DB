@@ -1,0 +1,43 @@
+'''
+Unsubmit
+Instructions from your teacher:
+Write a program that will transfer text data to a database.  You will find the text file in google classroom.
+'''
+import sqlite3
+#Devyn and Justin
+#4th Hour
+
+conn = sqlite3.connect("dbBabyNames.db")
+c = conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS tblBabyNames(State CHAR(2), Gender CHAR(1), Year INT, Name TEXT, Amount INT)")
+
+
+fileBabyName = 'example.txt'
+fileNames = open(fileBabyName,'r')
+
+def funInsertingNames():
+    line=''
+    fileNames = open(fileBabyName,'r')
+    for x in range(89823):
+        
+        arrNames = fileNames.readline().split(",")
+        strState = arrNames[0]
+        strGender = arrNames[1]
+        intYear = int(arrNames[2])
+        strName = arrNames[3]
+        intAmount = arrNames[4]
+        arrAmount = intAmount.split("\\")
+        intAmount = int(arrAmount[0])
+        c.execute("INSERT INTO tblBabyNames(State, Gender, Year, Name, Amount) VALUES(:insState, :insGender, :insYear, :insName, :insAmount)", {'insState':strState,'insGender':strGender,'insYear':intYear,'insName':strName,'insAmount':intAmount})
+        conn.commit()
+
+funInsertingNames()
+
+
+def get_posts():
+    c.execute("SELECT * FROM tblbabyNames")
+
+    #This shows all baby names
+    print(c.fetchall())
+
+get_posts()
