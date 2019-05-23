@@ -1,0 +1,288 @@
+'''
+Instructions from your teacher:
+Pythagoras and other philosophers of the time believed that because 
+mathematical concepts were more "practical" (easier to regulate and 
+classify) than physical ones, they had greater actuality. 
+St. Augustine of Hippo (A.D. 354–430), wrote: "Numbers are the 
+Universal language offered by the deity to humans as confirmation of 
+the truth.
+
+Write a program that will decipher your birthday and produce a description 
+of the type of person you are.  To do so use the following algorithm and data.
+
+Birthday:  March 15, 1969
+3
+1+5
+1+9+5+7
+
+3+6+22=31
+Now, if the number is 11 or 22 then we have a prediction, otherwise,
+we are trying to reduce the date to a single digit therefore:
+
+3+1=4
+
+Using 4, query the database for an answer.
+Format the output.
+'''
+
+import replit
+replit.clear()
+
+import sqlite3
+
+conn = sqlite3.connect('numbers.db')
+print("Database Opened!")
+c = conn.cursor()
+
+def CreateTable():
+  c.execute('CREATE TABLE IF NOT EXISTS Numo(ID INTEGER PRIMARY KEY, Prediction TEXT)')
+  conn.commit()
+
+def WriteItems():
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(1,'Just as Aries, the first sign of the\n zodiac, is about action and initiation,\n in numerology, 1 is linked to forward \nmotion. 1 symbolizes a pioneering \nspirit, independent nature, and innate \nleadership capabilities. On a bad day, 1\n can be be a bit bossy or boastful, \nhiding any insecurities behind an \nover-developed self-importance. 1 must \nremember that although it is first, it \ncan very quickly become the loneliest \nnumber. Even the most autonomous 1s need\n the support of their friends, family, \nand lovers.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(2,'2 is linked to sensitivity, balance, and\n harmony. Within numerology, the 2 \nvibration assumes the role of the \nmediator, creating harmony by bringing \ntogether dissonant forces through \ncompassion, empathy, and kindness. 2 is \nlinked to psychic abilities and \nintuition, and if this number appears as\n a Life Path or Destiny Number, the \nindividual will be astute to subtle \nenergy shifts and emotional nuances. \nBecause 2 is so sensitive, it is very \nconflict averse, and can end up feeling \nunder-appreciated or unacknowledged. 2 \nmust avoid seeking external validation \nand, instead, realize that perfect \nequilibrium needed already exists within.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(3,'Communication is paramount for 3. \nSymbolically, 3 represents the output of\n two joined forces: It is the essence of\n creation. 3 is highly gifted at \nexpression, seamlessly sharing \ninnovative and pioneering concepts \nthrough art, writing, and oration. Your \nwork inspires, motivates, and uplifts \nothers, and 3 finds great joy making \nothers smile. However, 3 is also known \nto be quite moody, and if 3 feels \nmisunderstood, may withdraw entirely. \nThe escapist tendencies of 3 are easily \nmitigated by practicing peaceful \nmindfulness: With such an active \nimagination, it’s important for 3 to \nfind moments of quiet to reset, restore,\n and recharge.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(4,'In numerology, 4 has an earthy-energy \nand is centered around fortifying its \nroots. 4 adamantly \nbelieves in the physical world, and \nknows that investing in a \nsolid infrastructure is necessary for \nbuilding a lasting legacy. Practical, \nhardworking, and responsible, the 4 \nvibration is focused on creating logical\n systems that can support scalable growth. \nThere is a solidity to 4, however, that \ncan quickly devolve into rigidity; 4 \nmust remember that rules are meant to \nenhance, not inhibit. It’s easy for 4 to\n become stubborn, so\n 4 benefits from learning to loosen up \nand think outside-the-box. 4 will feel \nliberated and inspired by finding the \nbravery to take a few bold risks.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(5,'Free-thinking, adventurous, and \nprogressive, 5 is defined by freedom. 5 \nneeds to experience the world by \nengaging its five senses: For 5, life \nlessons are acquired through spontaneous\n acts of bravery. Akin to Sagittarius \nenergy within astrology, 5 is known for \nits playful, impuslive, and vivacious \nspirit. But on the other side of its \nsignature joie de vivre, 5 can become \nrestless and impatient. Since 5 is \nalways seeking discovery, it has a \ndifficult time accepting life’s \nday-to-day responsibilities — including \nprofessional and interpersonal \ncommitments. 5 must remember that when \nit narrows its gaze, it will discover \nthat the most rewarding exploration \nexists in its own backyard.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(6,'6 is recognized for its nurturing, \nsupportive, and empathic nature. A true \nhealer, 6 has the ability to problem \nsolve in both the emotional and physical\n realms, helping others through its \nstraightforward, yet gentle, approach. 6\n has a strong sense of responsibility, \nand cares deeply for its friends, family\n and lovers. This number also can easily\n communicate with children and animals, \ndisplaying a soft tenderness and \ncaretaker spirit. But not everything \nneeds to be parented, and sometimes 6’s \nprotective energy can become domineering\n and controlling. To avoid carrying the \nworld on its shoulders, 6 must learn to\n build trust and understanding for \nothers: Simply put, everyone must follow\n their own unique path.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(7,'The detectives of numerology, 7 is known\n for its investigative abilities and \nanalytical skills. Astrologically, the \nnumber 7 can be thought of as a blend of\n Virgo and Scorpio energy: 7 is \nextremely detail-oriented, but is \ndriven by inner-wisdom as oppossed to \ntangible realities. 7 has a keen eye, \nand its astute observations fuel a \nquick-witted, inventive spirit. Because \nit can quickly find the flaws in almost \nany system, 7 is a bit of a \nperfectionist. 7 will often assume fault\n so it’s important for this number to \ncounterbalance its inherent skepticism \nwith an open mind. Not everything will \nbe foolproof — but that’s what makes life fun.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(8,'8 is all about abundance. Within \nnumerology, this number is linked to \nmaterial wealth and financial success. \nAmbitious and goal-oriented, 8 can \neffortlessly assume leadership positions\n through its natural magnetism. 8 \napplies big-picture thinking to broaden \nits scope, racing up the top of any \nladder to reach extraordinary heights. \nBut with great power comes great \nresponsibility: 8 breeds workaholics, \nand on a bad day, can become excessively\n controlling and possessive. However, \nits negative qualities can be lessen by \ngiving back to the community. By using \nis success to help others, 8 realizes \nthat there is nothing more valuable than\n contributing to the greater good.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(9,'As the final single digit within \nnumerology, 9 connotes an old soul. 9 is\n no stranger life’s ups-and-downs of \nlife — been there, done that. \nAccordingly, 9 can effortlessly \nsynthesize large quantities of stimuli, \npsychically connecting the dots to form \na cohesive whole. The mission for 9 is \nto reach its highest state of \nconsciousness, and to help others also \nachieve this spiritual awareness. 9 \nisn’t afraid to transform, and its \nmalleable spirit inspires others to \nexplore their own ranges of motion. \nSince 9, in many ways, has transcended \nthe physical plane, it must constantly \nremember to anchor itself. 9 must learn \nto balance the abstract with the \ntangible, ultimately finding its place \nat the intersection of fantasy and reality.')")
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(11,'Master Number 11 revs up the energy of \nNumber 2; its purpose is to heal self \nand other through its elevated psychic \nabilities. Often times, Master Number \n11''s intuitive gifts are a result of \nextreme life circumstances: Master \nNumber 11 has no choice but to cultivate \nextrasensory talents. In numerology, \nMaster Number 11 is connected to spiritual\n enlightenment, awareness, and\n philosophical balance.')")  
+  c.execute("INSERT INTO Numo(ID,Prediction) VALUES(22,'Master Number 22, often referred to as \nthe Master Builder, expands on the \nvibrations of Number 4. Master Number 22\n is inspired to create platforms in the \nphysical realm that transcend immediate \nrealities — by fusing the tangible and \nintangible, Master Number 22 cultivates \na dynamic long-term legacy. Master \nNumber 22''s skills are usually a \nbyproduct of early childhood instability\n that fuels innovative thought. \nIndustrious, creative, and dependable, \nMaster Number 22 is always on a mission \nto transform.')")
+  conn.commit()
+
+
+
+def funNumbers(): 
+  date = input("\n===========================\nPlease enter your birthdate\nEnter here: ")
+  print("===========================")
+
+  print(date)
+
+  strMonth, strDay, strYear = date.split('/')
+
+  #Using plus signs does not add spaces unlike commas.
+  print("Day is: " + strDay)
+  print("Month is:" + strMonth)
+  print("Year is:" + strYear)
+
+  intDay = int(strDay)
+  intMonth = int(strMonth)
+  intYear = int(strYear)
+
+  if intMonth == 1:
+    month = "January"
+
+  elif intMonth == 2:
+    month = "February"
+
+  elif intMonth == 3:
+    month = "March"
+
+  elif intMonth == 4:
+    month = "April"
+
+  elif intMonth == 5:
+    month = "May"
+
+  elif intMonth == 6:
+    month = "June"
+
+  elif intMonth == 7:
+    month = "July"
+
+  elif intMonth == 8:
+    month = "August"
+
+  elif intMonth == 9:
+    month = "September"
+
+  elif intMonth == 10:
+    month = "October"
+
+  elif intMonth == 11:
+    month = "November"
+
+  elif intMonth == 12:
+    month = "December"
+
+  #If the user has entered a day that is 32 or higher with any of the associated months below(such as January, March, May, etc.) then bring them back to enter their brithday.
+  if intMonth == 1 or intMonth == 3 or intMonth == 5 or intMonth == 7 or intMonth == 8 or intMonth == 10 or intMonth== 12:
+    if intDay >= 32:
+      replit.clear()
+      print("There are no more than 31 days in " + month +"! Please try again")
+      funNumbers()
+
+  #If the user has entered a day that is 31 or higher with any of the associated months below(such as March, April, June, etc) then bring them back to enter their birthday.
+  elif intMonth == 4 or intMonth == 6 or intMonth == 9 or intMonth == 11: 
+    if intDay >= 31:
+      replit.clear()
+      print("There are no more than 30 days in " + month + "! Please try again.")
+      funNumbers()
+
+  #If the user's birthday is on February
+  elif intMonth == 2:
+    if intDay >= 29:
+      print("There are nomore than 28 days in February! Please try again.")
+      funNumbers()
+
+  #If the user enters a month of 13 or higher
+  elif intMonth >= 13:
+    #Bring them back to enter their brithday
+    print("There are no more than 12 months in a year! Please try again.")
+    funNumbers()
+  
+
+  d_m_y_sum_gather = []
+
+
+
+ 
+  #If the month is greater than or equal to 10
+  if intMonth >= 10:
+    #Split it
+    split_month_into_single_digits = [int(x) for x in str(intMonth)]
+    #Add it
+    sum_of_month_split_into_single_digits = sum(split_month_into_single_digits)
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(sum_of_month_split_into_single_digits)
+
+  #If the day is greater than or equal to ten
+  if intDay >= 10:
+    #Then split it into single digits so that we can add them up later for the program
+    #Split it
+    split_day_into_single_digits = [int(x) for x in str(intDay)]
+    #Add it
+    sum_of_day_split_into_single_digits = sum(split_day_into_single_digits)
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(sum_of_day_split_into_single_digits)
+
+
+  #If the year is greater than or equal to
+  if intYear >= 10:
+    #Split it
+    split_year_into_single_digits = [int(x) for x in str(intYear)]
+    #Add it
+    sum_of_year_split_into_single_digits = sum(split_year_into_single_digits)
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(sum_of_year_split_into_single_digits)
+
+  if intMonth <= 9:
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(intMonth)
+
+  if intDay <= 9:
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(intDay)
+
+  if intYear <= 9:
+    #Then add it to an array to add the day month and year
+    d_m_y_sum_gather.append(intYear)
+
+  elif intDay <= 9 and intMonth <= 9 and intYear <= 9:
+    #add it to an array to add the day month and year
+    d_m_y_sum_gather.append(intMonth)
+    d_m_y_sum_gather.append(intDay)
+    d_m_y_sum_gather.append(intYear)
+
+  print("\nDay month and year sum gathered together",d_m_y_sum_gather)
+
+  sum_of_d_m_y = sum(d_m_y_sum_gather)
+  print("\nSum of day, month, and year that were gathered:", sum_of_d_m_y)
+  
+  #If the sum of day month and year is greater than or equal to 10
+  if sum_of_d_m_y >= 10:
+    
+    #Elif the sum of the day month and year equals 11
+    if sum_of_d_m_y == 11:
+      #THIS BELOW HELPS US CHECK WHETHER THE NUMBER IS IN THE DATABASE OR NOT.
+      c.execute("SELECT EXISTS(SELECT 1 FROM Numo WHERE ID=? )", (sum_of_d_m_y,))
+      record = c.fetchone()
+      if record[0] == 1:#If the number is in the table
+      #Then print out the prediction
+        sql = "SELECT * FROM Numo WHERE ID=?"
+        c.execute(sql,(str(sum_of_d_m_y),))
+        prediction = c.fetchall()
+        print("\n",prediction[0][1])
+      else:
+          print ("Number not in table")
+
+    #Elif the sum of the day month and year equals 22
+    elif sum_of_d_m_y == 22:
+      #THIS BELOW HELPS US CHECK WHETHER THE NUMBER IS IN THE DATABASE OR NOT.
+      c.execute("SELECT EXISTS(SELECT 1 FROM Numo WHERE ID=? )", (sum_of_d_m_y,))
+      record = c.fetchone()
+      if record[0] == 1:#If the number is in the table
+      #Then print out the prediction
+        sql = "SELECT * FROM Numo WHERE ID=?"
+        c.execute(sql,(str(sum_of_d_m_y),))
+        prediction = c.fetchall()
+        print("\n",prediction[0][1])
+      else:
+          print ("Number not in table")
+    
+    #elif the sum of day month and year are greater than or equal o 10
+    elif sum_of_d_m_y >= 10: 
+      #Split it 
+      split_sum_of_d_m_y = [int(x) for x in str(sum_of_d_m_y)]
+      #Add it
+      SUM_OF_split_sum_of_d_m_y = sum(split_sum_of_d_m_y)
+
+      #If the sum of day month and year equals 10
+      if SUM_OF_split_sum_of_d_m_y == 10:
+        #equal that to one since 10+1 equals 1
+        SUM_OF_split_sum_of_d_m_y = 1
+
+        
+      #shows the sum of day month and year for debugging
+      print("\nSum of day, month, and year after splitting the double digit:",SUM_OF_split_sum_of_d_m_y)
+        
+
+      #THIS BELOW HELPS US CHECK WHETHER THE NUMBER IS IN THE DATABASE OR NOT.
+      c.execute("SELECT EXISTS(SELECT 1 FROM Numo WHERE ID=? )", (SUM_OF_split_sum_of_d_m_y,))
+
+      record = c.fetchone()
+      if record[0] == 1:#If the number is in the table
+      #Then print out the prediction
+        sql = "SELECT * FROM Numo WHERE ID=?"
+        c.execute(sql,(str(SUM_OF_split_sum_of_d_m_y),))
+        prediction = c.fetchall()
+        print("\n",prediction[0][1])
+      else:
+          print ("Number not in table")
+  
+  #If the sum of the day month and year are not greater than or equal to 0
+  else:
+    #check to see if the number is in the table
+    c.execute("SELECT EXISTS(SELECT 1 FROM Numo WHERE ID=? )", (sum_of_d_m_y,))
+    record = c.fetchone()
+
+    if record[0] == 1:#If the number is in the table
+    #Then print out the prediction
+      sql = "SELECT * FROM Numo WHERE ID=?"
+      c.execute(sql,(str(sum_of_d_m_y),))
+      prediction = c.fetchall()
+      print("\n",prediction[0][1])
+    else:
+        print ("Number not in table")
+
+    
+
+    
+    
+    #elif the sum equals other numbers from the database.
+
+  #PROCESS
+  '''
+  We are going to split the integer numbers then add them together and afterwards, if it gives us a single digit, then we are going to output.  If it is not a single digit number other than 11 and 22, then we'll add again.
+  '''
+
+def funControlCenter():
+  CreateTable()
+  WriteItems()
+
+  funNumbers()
+
+
+funControlCenter()
