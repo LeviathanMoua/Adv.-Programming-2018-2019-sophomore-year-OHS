@@ -1,0 +1,394 @@
+'''
+Instructions from your teacher:
+Using the data given, please use your DateDiff function to determine the cost on any given datum in the database.  Example:
+                      Truck Rental Program
+                          1. Add a rental
+                          2. Edit a rental
+                          3. Remove a rental
+                          4. Find a rental
+                          5. Show all rentals
+                          6. Exit
+
+Please make a selection: 4
+
+Enter data ID:  1116
+********************************************************
+                     Rental Cost                                                  *                        
+********************************************************
+1116   TruckA 8/11/2018 to 8/12/2018  1 day @ $48.00  Cost: $48.00
+'''
+
+import calendar
+import datetime
+import time
+from datetime import datetime
+from datetime import datetime as dt
+from datetime import timedelta
+import sqlite3
+import replit
+
+conn = sqlite3.connect('dbRental.db')
+c = conn.cursor()
+
+c.execute("CREATE TABLE IF NOT EXISTS tblTrucks(ID INT, StartDate TEXT, EndDate TEXT, RentalPrice REAL, Vehicle TEXT)")
+
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1111,'3/11/2018','3/16/2018',48.00,'TRUCKA')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1112,'4/11/2018','4/21/2018',38.00,'TRUCKB')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1113,'5/11/2018','5/18/2018',28.00,'TRUCKC')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1114,'6/11/2018','6/22/2018',18.00,'TRUCKD')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1115,'7/11/2018','7/19/2018',18.00,'TRUCKD')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1116,'8/11/2018','8/12/2018',48.00,'TRUCKA')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1117,'9/11/2018','9/17/2018',38.00,'TRUCKB')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1118,'10/11/2018','10/31/2018',28.00,'TRUCKC')")
+c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(1119,'11/11/2018','11/24/2018',28.00,'TRUCKC')")
+conn.commit()
+
+def AskIfWantAddEditRemoveFindOrShow():
+      
+      AnythingElse = input("Would you like to do anything else(such as add, edit, remove, find, or show all rentals?):")
+
+      if AnythingElse == "y" or AnythingElse == "yes":
+        replit.clear()
+        fnControlCenter()
+
+      elif AnythingElse == "n" or AnythingElse == "no":
+        replit.clear()
+        print("\nGoodbye!")
+      else:
+        print("\nInvalid input!\n")
+        AskIfWantAddEditRemoveFindOrShow()
+
+
+
+#ADD RENTAL
+def funAddARental():
+  # This is just the inputs
+  strStartDate = input("====================================================================================================\nPlease input the date the car was rented in the form mm/dd/yyyy or T for today\nEnter here: ").upper()
+  strEndDate = input("\nPlease input the date the car was returned or will be returned in the form mm/dd/yyyy or T for today\nEnter here: ").upper()
+  if strStartDate == 'T':
+    intDay, intMonth, intYear = time.strftime("%d,%m,%Y").split(',')
+    strStartDate = (str(intMonth)+"/"+str(intDay)+"/"+str(intYear))
+  else:
+    intMonth, intDay, intYear = strStartDate.split("/")
+  if strEndDate == 'T':
+    intDay2, intMonth2, intYear2 = time.strftime("%d,%m,%Y").split(',')
+    strEndDate = (str(intMonth2)+"/"+str(intDay2)+"/"+str(intYear2))
+  else:
+    intMonth2, intDay2, intYear2 = strEndDate.split("/")
+  print("====================================================================================================")
+  while True:
+    strTypeOfTruck = input("\n=====================================\nWhat type of truck are they renting?\nTRUCKA\nTRUCKB\nTRUCKC\nTRUCKD\nEnter here: ").upper()
+    if strTypeOfTruck == 'TRUCKA':
+      fltTruckCost = 48.0
+      break
+    elif strTypeOfTruck == 'TRUCKB':
+      fltTruckCost = 38.0
+      break
+    elif strTypeOfTruck == 'TRUCKC':
+      fltTruckCost = 28.0
+      break
+    elif strTypeOfTruck == 'TRUCKD':
+      fltTruckCost = 18.0
+      break
+    else:
+      print("Error! Not a valid option! Try again!")
+
+  print("=====================================")
+  intNewID = int(input("What is the ID of this rental?\n\nEnter here: "))        
+
+  c.execute("INSERT INTO tblTrucks(ID,StartDate,EndDate,RentalPrice, Vehicle) VALUES(:NewID,:NewStartDate,:NewEndDate,:NewRentalPrice,:NewVehicle)",{'NewID':intNewID,'NewStartDate':strStartDate,'NewEndDate':strEndDate,'NewRentalPrice':fltTruckCost,'NewVehicle':strTypeOfTruck})
+  conn.commit()
+  #Asks the user if they want to continue
+  def AskIfWantContinue():
+    DoYouWannaPrintMore = input("\n_________________________________\nDo you want to add more rentals?").lower()
+
+    if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+      print("")
+      funAddARental()
+
+    elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+      replit.clear()
+      AskIfWantAddEditRemoveFindOrShow()
+
+      
+    else:
+      print("Invalid input!")
+      AskIfWantContinue()
+  AskIfWantContinue()
+ 
+  
+
+
+def funEditARental():
+  intWhatID = int(input("======================================================\nWhat is the ID of the rental you wish to edit?\n\nIf you do not know the ID's, then use Show All Rentals\n\nEnter here: "))
+  intChange = int(input("\nWhat would you like to update?\n1 for start date\n2 for end date\n3 for truck type\n4 for ID\n\nEnter here: "))
+  c.execute("SELECT * FROM tblTrucks WHERE ID = :WhatToUpdate",{'WhatToUpdate':intWhatID})
+  WhatToUpdate = c.fetchone()
+  if WhatToUpdate == None:
+    print("Looks like it doesn't exist! Please try again!\n======================================================")
+    funEditARental()
+  else:
+    OK = input("======================================================\n\nStart Date: " + WhatToUpdate[1] + "\n\nEnd Date: " + WhatToUpdate[2] + "\n\nPrice per day: " + str(WhatToUpdate[3]) + "\n\nTruck: " + WhatToUpdate[4] + "\n\nDoes this look right?\n\nEnter here: ").lower()
+    if OK == 'yes' or OK == 'y':
+
+      if intChange == 1:
+        newStartDate = input("==============================\nPlease type in the new start date in the form mm/dd/yyyy\nEnter here: ")
+        c.execute("UPDATE tblTrucks SET StartDate=:newStartDate WHERE ID = :WhatToUpdate", {'newStartDate':newStartDate,'WhatToUpdate':intWhatID})
+        conn.commit()
+        def AskIfWantContinue():
+          DoYouWannaPrintMore = input("\n_________________________________\nDo you want to edit more rentals?").lower()
+
+          if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+            print("")
+            funEditARental()
+
+          elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+            replit.clear()
+            AskIfWantAddEditRemoveFindOrShow()
+
+            
+          else:
+            print("Invalid input!")
+            AskIfWantContinue()
+        AskIfWantContinue()
+        
+
+      elif intChange == 2:
+        newEndDate = input("======================\nPlease type in the new end date in the form mm/dd/yyyy\nEnter here: ")
+        c.execute("UPDATE tblTrucks SET EndDate=:newEndDate WHERE ID = :WhatToUpdate", {'newEndDate':newEndDate,'WhatToUpdate':intWhatID})
+        conn.commit()
+        def AskIfWantContinue():
+          DoYouWannaPrintMore = input("\n_________________________________\nDo you want to edit more rentals?").lower()
+
+          if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+            print("")
+            funEditARental()
+
+          elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+            replit.clear()
+            AskIfWantAddEditRemoveFindOrShow()
+            
+          else:
+            print("Invalid input!")
+            AskIfWantContinue()
+        AskIfWantContinue()
+        
+
+      elif intChange == 3:
+        newTruck = input("======================\nWhat is the truck they really have?\nTRUCKA\nTRUCKB\nTRUCKC\nTRUCKD\nEnter here: ").upper()
+
+        if newTruck == 'TRUCKA':
+          newRentalPrice = 48.0
+          
+        elif newTruck == 'TRUCKB':
+          newRentalPrice = 38.0
+          
+        elif newTruck == 'TRUCKC':
+          newRentalPrice = 28.0
+          
+        elif newTruck == 'TRUCKD':
+          newRentalPrice = 18.0
+          
+        c.execute("UPDATE tblTrucks SET Vehicle=:newTruck,RentalPrice=:newRentalPrice WHERE ID = :WhatToUpdate", {'newTruck':newTruck,'newRentalPrice':newRentalPrice,'WhatToUpdate':intWhatID})
+        conn.commit()
+        def AskIfWantContinue():
+          DoYouWannaPrintMore = input("\n_________________________________\nDo you want to edit more rentals?").lower()
+
+          if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+            print("")
+            funEditARental()
+
+          elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+            replit.clear()
+            AskIfWantAddEditRemoveFindOrShow()
+              
+          else:
+            print("Invalid input!")
+            AskIfWantContinue()
+        AskIfWantContinue()
+        
+
+      elif intChange == 4:
+        newID = input("======================\nWhat would you like to change the ID to?\n\nEnter here: ")
+        c.execute("UPDATE tblTrucks SET ID=:newID WHERE ID = :WhatToUpdate", {'newID':newID,'WhatToUpdate':intWhatID})
+        conn.commit()
+        def AskIfWantContinue():
+          DoYouWannaPrintMore = input("\n_________________________________\nDo you want to edit more rentals?").lower()
+
+          if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+            print("")
+            funEditARental()
+
+          elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+            replit.clear()
+            AskIfWantAddEditRemoveFindOrShow()
+            
+          else:
+            print("Invalid input!")
+            AskIfWantContinue()
+        AskIfWantContinue()
+        
+
+      else:
+        print("======================\nThat is an invalid input! Please retry!\n========================================")
+        funEditARental()
+
+    elif OK == 'no':
+      print("There might be multiple rentals with the same ID, if that is the case please delete them and re add them with different ID's.\nTip, show all rentals and write down all the information before deleting them so you don't forget them when readding them.")
+
+    else:
+      replit.clear()
+      print("Error, not an option. Please answer with yes or no, try again.")
+      funEditARental()
+
+def funRemoveARental():
+  intWhatToRemove = int(input("==================================================\nWhat is the ID of the rental you wish to delete?\n\nNote, if there are for some reason multiple instances of rentals with the same ID this will delete all of them, so if you know there are two or more instances that share the same ID then back them up or write them down before this\n\nIf you are sure you wish to proceed then enter here: "))
+  c.execute("DELETE FROM tblTrucks WHERE ID = :WhatToDelete", {'WhatToDelete':intWhatToRemove})
+  conn.commit()
+  print("==================================================")
+  def AskIfWantContinue():
+    DoYouWannaPrintMore = input("\n_________________________________\nDo you want to remove more rentals?").lower()
+
+    if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+      print("")
+      funRemoveARental()
+
+    elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+      replit.clear()
+      AskIfWantAddEditRemoveFindOrShow()
+      
+    else:
+      print("Invalid input!")
+      AskIfWantContinue()
+  AskIfWantContinue()
+
+
+
+def funFindARental():
+  intWhatToFind = int(input("=======================================================================================================\nPlease input the ID of the rental you wish to find\nEnter here: "))
+  c.execute("SELECT * FROM tblTrucks WHERE ID = :WhatToFind",{'WhatToFind':intWhatToFind})
+  WhatWasFound = c.fetchone()
+  strStartDate = WhatWasFound[1]
+  strEndDate = WhatWasFound[2]
+  intMonth2, intDay2, intYear2 = strEndDate.split("/")
+  intMonth, intDay, intYear = strStartDate.split("/")
+  intMonth2, intDay2, intYear2 = int(intMonth2), int(intDay2), int(intYear2)
+  intMonth, intDay, intYear = int(intMonth), int(intDay), int(intYear)
+
+  if intYear != intYear2 and intYear2>intYear:
+    intYearDiff = intYear2-intYear
+
+  elif intYear == intYear2:
+    intYearDiff = 0
+
+  else:
+    print("Error! The start date is later than the end date!")
+    funAddARental()
+
+  if intMonth != intMonth2:
+
+    if intMonth > intMonth2:
+      intYear-=1
+      intMonth2+=12
+    intMonthDiff = intMonth2-intMonth
+    intMonthDiff = intMonthDiff + (intYearDiff*12)
+
+    if intYearDiff < 0:
+      print("Error! The start date is later than the end date!")
+
+  else:
+    intMonthDiff = intYearDiff*12
+  arrMonth = [intMonth]
+  intDayDiff = 0
+  for x in range(intMonthDiff):
+    if arrMonth[-1] == 1 or arrMonth[-1] == 3 or arrMonth[-1] == 5 or arrMonth[-1] == 7 or arrMonth[-1] == 8 or arrMonth[-1] == 10 or arrMonth[-1] == 12:
+      intDayDiff+=31
+      if intMonth < 12:
+        arrMonth.append(intMonth)
+        intMonth+=1
+      else:
+        arrMonth.append(intMonth)
+        intMonth=1
+    elif arrMonth[-1] == 4 or arrMonth[-1] == 6 or arrMonth[-1] == 9 or arrMonth[-1] == 11:
+      intDayDiff+=31
+      intMonth+=1
+    elif intMonth == 2:
+      for x in range(intYear,intYear2+1):
+        if x%4 == 0 and x%100 != 0:
+          intDayDiff+=29
+        else:
+          intDayDiff+=28
+    if intMonth == 1 or intMonth == 3 or intMonth == 5 or intMonth == 7 or intMonth == 8 or intMonth == 10 or intMonth == 12:
+      intDayDiff+=31-intDay
+    elif intMonth == 4 or intMonth == 6 or intMonth == 9 or intMonth == 11:
+      intDayDiff+=30-intDay
+    elif intMonth == 2:
+      if intYear%4==0 and intYear%100==0:
+        intDayDiff+=29-intDay
+      else:
+        intDayDiff+=28-intDay
+  intDayDiff+=intDay2-intDay
+    
+  fltNewRentalPrice = WhatWasFound[3]*intDayDiff
+  print("The Start Date is: " + strStartDate)
+  print("The End Date is: " + strEndDate)
+  print("The Rental Price per day is: " + str(WhatWasFound[3]))
+  print("The Total Rental Price is: " + str(fltNewRentalPrice))
+  print("The Type of Truck is: " + WhatWasFound[4])
+  print("=======================================================================================================")
+  def AskIfWantContinue():
+    DoYouWannaPrintMore = input("\n_________________________________\nDo you want to find more rentals?").lower()
+
+    if DoYouWannaPrintMore == "y" or DoYouWannaPrintMore == "yes":
+      print("")
+      funFindARental()
+
+    elif DoYouWannaPrintMore == "n" or DoYouWannaPrintMore == "no":
+      replit.clear()
+      AskIfWantAddEditRemoveFindOrShow()
+      
+    else:
+      print("Invalid input!")
+      AskIfWantContinue()
+  AskIfWantContinue()
+
+
+  
+def funShowAllRentals():
+  print("=======================================================================================================")
+  c.execute("SELECT * FROM tblTrucks")
+  print("These are the results. The order is ID, StartDate, EndDate, Price per day, and then which vehicle it is")
+  [print(row) for row in c.fetchall()]
+  print("=======================================================================================================")
+  AskIfWantAddEditRemoveFindOrShow()
+
+
+def fnControlCenter():
+  #ASK USER
+  user_select_input = int(input("\n\nSelect the number of what you'd like to do\n\n1. Add a rental\n2. Edit a rental\n3. Remove a rental\n4. Find a rental\n5. Show all rentals\n6. Exit\n\nEnter here:"))
+
+
+  #IF user selects 1, then add a rental
+  if user_select_input == 1:
+    funAddARental()
+    
+  #Elif user selects 2, then edit a rental
+  elif user_select_input == 2:
+    funEditARental()
+
+  #Elif a user selects 3, then remove a rental
+  elif user_select_input == 3:
+    funRemoveARental()
+
+    #Find a rental statement
+  elif user_select_input == 4:
+    funFindARental()
+        
+  #Show all rentals statement
+  elif user_select_input == 5:
+    funShowAllRentals()
+
+  elif user_select_input == 6:
+    replit.clear()
+    print("Goodbye!")
+fnControlCenter()
