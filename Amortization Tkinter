@@ -1,0 +1,80 @@
+'''
+Write a program that will compute amortization.
+Create a form that has the following widgets:
+Principle (label and textbox)
+Interest  (label and textbox)
+Compounding period in months  (label and textbox)
+Time in years  (label and textbox)
+Calculate command button
+'''
+#Justin Moua
+#4th Hour
+#Advanced Programming
+#Amortization.
+import tkinter as tki
+
+
+window = tki.Tk()
+window.title('Amortization')
+window.geometry('300x250')
+#PRINCIPLE
+#Text is the text box
+txtPrinciple = tki.Entry()
+txtPrinciple.place(x = 100, y = 12)
+
+#Label is the name of the box
+lblPrinciple = tki.Label(text="Principle",fg='maroon',font=('Comic Sans',10))
+lblPrinciple.place(x=40,y=12)
+
+#INTEREST
+txtInterest = tki.Entry()
+txtInterest.place(x=100,y=50)
+
+lblInterest = tki.Label(text="Interest",fg='maroon',font=('Comic Sans',10))
+lblInterest.place(x=50,y=50)
+
+#COMPOUND
+#compounding periods in months.
+txtCompound = tki.Entry()
+txtCompound.place(x=100,y=88)
+
+lblCompound = tki.Label(text="Compounding Period",fg='maroon',font=('Comic Sans',7))
+lblCompound.place(x=3,y=87)
+'''
+#TIME
+#time in years
+txtTime = tki.Entry()
+txtTime.place(x=100,y=126)
+
+lblTime = tki.Label(text="Time",fg='maroon',font=('Comic Sans',10))
+lblTime.place(x=60,y=126)
+'''
+def get_amortization():
+    #Retrieves the principle
+    p=float(txtPrinciple.get())
+    #Retrieves the interest
+    fInterest=float(txtInterest.get())
+    #This turns the interest from a percentage to a decimal
+    r=(fInterest*.01)/12
+    #retrieves the compound
+    n=float(txtCompound.get())
+
+    amortization = ( p* (((1+r)**n)*r) / (((1+r)**n)-1) )
+    #Rounds the amortization to the second digit.
+    fRoundedTotal=round(amortization,2)
+    strDisplayTotal = ('You will need to pay ' + str(fRoundedTotal) + ' every month') 
+    lblAnswer = tki.Label(text=str(strDisplayTotal),fg='black',font=('Comic Sans',10))
+    lblAnswer.place(x=40,y=220)
+
+        
+#BUTTONS
+btnCalculate = tki.Button(window,text='Calculate',command=get_amortization)
+btnCalculate.place(x=125,y=150)
+
+
+#p = principle.
+#r = Interest/time
+#n = compound * time
+
+
+tki.mainloop()
