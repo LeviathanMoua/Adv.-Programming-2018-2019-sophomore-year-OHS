@@ -1,0 +1,75 @@
+#Title Name: Tuples/lists/dict/sets
+
+'''
+Instructions from your teacher:
+No instructions for this assignment
+'''
+
+import replit
+
+replit.clear()
+
+tplX = ('dog', 'cat', 'fish')
+lstX = ['dog','cat','fish']
+dctX = {1: 'dog',2:'cat',3:'fish'}
+setX = {'dog','cat','fish'}
+
+print(tplX[1])
+print(tplX.count('fish'))
+
+
+'''
+add
+'''
+
+lstX.append('horse')
+print(lstX)
+
+setX.add('horse')
+print(setX)
+
+dctX[4] = 'horse'
+print(dctX)
+
+'''
+remove
+'''
+lstX.remove('dog')
+print(lstX)
+
+dctX.pop(1) #pop by key
+print(dctX)
+
+setX.discard('dog')
+print(setX)
+
+'''
+constructors
+'''
+y = tuple(('a','b','c'))
+print('set:', y)
+
+y = dict(first = 'a', second = 'b', third = 'c')
+print('dictL',y)
+
+'''
+looping through the strucutre
+'''
+for i in lstX:
+  print(i)
+
+for i in setX:
+  print(i)
+  
+for i in tplX:
+  print(i)
+
+#looping through dictionarys
+
+for i,j  in dctX.items():
+  print(i,j)
+
+print(dctX.keys())
+
+print(dctX.values())
+
