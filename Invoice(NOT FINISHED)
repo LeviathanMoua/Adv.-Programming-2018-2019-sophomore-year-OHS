@@ -1,0 +1,59 @@
+'''
+Instructions from your teacher:
+Create a program that will accept customer data and generate an invoice.  The data is to be stored in two tables: Customer and Invoice.
+
+Customer Data:
+CustomerID
+First Name
+Last Name
+Address
+City
+State
+Zip
+Phone
+Email
+
+Invoice Data:
+InvoiceID
+Product Name
+Quantity
+Cost
+
+Expected output:
+╔══════════════════════════════════════════╗
+║                                          ║
+║                SUPER STORE               ║
+║                                          ║
+╚══════════════════════════════════════════╝
+CustomerID
+First Name Last Name
+Address  City, State  Zip
+Phone
+Email
+***************************************************************
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+Product Name                                    Quantity                                         Cost
+
+Tax:                                                                                                            Tax
+Total:                                                                                                        Total
+'''
+
+import sqLite3
+conn = sqlite3.connect('invoice.db')
+cursor = conn.cursor
+
+def Create_Table():
+  cursor.execute("""CREATE TABLE IF NO TEXISTS Customer
+  (customerID TEXT, FirstName CHAR(20), LastName CHAR(35), Address CHAR(40),
+  City CHAR(40), State CHAR(31), Zip CHAR(5), Phone CHAR(11), Email CHAR(50))""")
+  
+  
+def insert_data():
+  
+  
+  
