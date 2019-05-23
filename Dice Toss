@@ -1,0 +1,91 @@
+'''
+Instructions from your teacher:
+Write a dice program that will simulate the tossing of two dice between two players. Sum the dice of both players, highest score wins the hand.  After 10 throws 
+by both players, determine a winner by high score. 
+'''
+
+import random
+import replit
+
+def funDiceGame():
+  #Fnction to ask if the user(s) wants to continue playing.
+  def fnAgainOrNo():
+    AgainOrNo = input("\nWould you like to play again?").lower()
+    if AgainOrNo == "yes":
+      replit.clear()
+      funDiceGame()
+    elif AgainOrNo == "no":
+      replit.clear()
+      print("Goodbye!")
+  #Asks how many times the user wants to roll their die for each person
+  inpHowManyRolls = int(input("How many times will both players roll: "))
+  print("")
+  #Variables and arrays.
+  player1 = inpHowManyRolls
+  player2 = inpHowManyRolls
+
+  Player1RollArray = []
+  Player2RollArray = []
+
+  WhichRound = 1
+  P1TotalWins = 0
+  P2TotalWins = 0
+  #Process
+  for x in range(inpHowManyRolls):
+    print("_________________________________\nRound:",WhichRound)
+    #Player 1 rolls
+    print("\nPlayer 1 is rolling...")
+    player1Roll = random.randint(1,6)
+    Player1RollArray.append(player1Roll)
+    print("Player 1 has rolled a:", player1Roll)
+    #player 2 rolls
+    print("\n\nPlayer 2 is rolling...")
+    player2Roll = random.randint(1,6)
+    Player2RollArray.append(player2Roll)
+    print("Player 2 has rolled a:", player2Roll)
+    print("")
+
+    #Ifplayer 1 wins
+    if player1Roll > player2Roll:
+      print("\nWinner is Player 1 for round",WhichRound,"!\n_________________________________\n")
+      P1TotalWins += 1
+      WhichRound += 1
+    #IF player 2 wins
+    elif player1Roll < player2Roll:
+      print("\nWinner is Player 2 for round",WhichRound,"!\n_________________________________\n")
+      P2TotalWins += 1
+      WhichRound += 1
+    else:
+      print("\nIt's a tie!\n_________________________________\n")
+      WhichRound += 1
+  #Shows the total sum of the rolled die
+  print("Total sum of the rolls of the die:")
+  SumOfPlayerArray1 = sum(Player1RollArray)
+  print("Player 1:",SumOfPlayerArray1)
+  SumOfPlayerArray2 = sum(Player2RollArray)
+  print("Player 2:", SumOfPlayerArray2)
+  #Shows the total of rounds won
+  print("\nTotal amount of rounds won:")
+  print("Player 1:", P1TotalWins)
+  print("Player 2:", P2TotalWins)
+
+
+  #Checks for the winner
+  #Winner of the SUm
+  if SumOfPlayerArray1 > SumOfPlayerArray2:
+    print("\nWinner is Player 1 for the total numbers!")
+  elif SumOfPlayerArray1 < SumOfPlayerArray2:
+    print("\nWinner is Player 2 for the total numbers!")
+  else:
+    print("\nIt's a tie for how much both of the players got a total of.")
+  #Winner of the rounds won
+  if P1TotalWins > P2TotalWins:
+    print("Winner is Player 1 for the most amount of rounds won!")
+    fnAgainOrNo()
+  if P1TotalWins < P2TotalWins:
+    print("Winner is Player 2 for the most amount of rounds won!")
+    fnAgainOrNo()
+  else:
+    print("It's a tie for how many rounds each player won.")
+    fnAgainOrNo()
+funDiceGame()
