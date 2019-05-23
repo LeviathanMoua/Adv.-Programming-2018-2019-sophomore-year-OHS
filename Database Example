@@ -1,0 +1,30 @@
+'''
+Instructions from your teacher:
+
+No instructions for this assignment
+'''
+import sqlite3
+
+conn=sqlite3.connect('temp.db')
+oCursor=conn.cursor()
+oCursor.execute("CREATE TABLE COMPANY (ID INT PRIMARY KEY NOT NULL,\
+  NAME TEXT NOT NULL,\
+  AGE INT,ADDRESS CHAR(50), SALARY REAL)")
+  
+oCursor.execute("INSERT INTO COMPANY(ID,NAME,AGE) VALUES(1,'david',33)")
+
+oCursor.execute("SELECT*FROM COMPANY")
+user1=oCursor.fetchall()
+print(user1)
+
+sql="UPDATE COMPANY SET address = 'Canyon 123' WHERE ID =1"
+oCursor.execute(sql)
+
+oCursor.execute(sql)
+sql="SELECT*FROM COMPANY WHERE ID="+str(1)
+
+oCursor.execute(sql)
+user1=oCursor.fetchall()
+print(user1)
+
+#We can retrieve passwords by using the Select
