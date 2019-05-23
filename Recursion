@@ -1,0 +1,24 @@
+'''
+Instructions from your teacher:
+Write a program that will create the first 10 elements of this sequence.  Use a recursive function.
+1,2,6,15,31,56...
+'''
+
+intFirstNum = 1
+intSquaredNum = 1
+arr = [intFirstNum]
+second_arr = [intSquaredNum]
+
+
+def fnFibonacciSquared(intFirstNum,intSquaredNum):
+  if intFirstNum < 10000:
+    intSquaredNum+=1
+    intFirstNum = second_arr[-1]**2 + arr[-1]
+    arr.append(intFirstNum)
+    second_arr.append(intSquaredNum)
+    fnFibonacciSquared(intFirstNum,intSquaredNum)
+  else:
+    for x in range(len(arr)):
+      print(arr[x])
+
+fnFibonacciSquared(intFirstNum,intSquaredNum)
