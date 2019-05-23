@@ -1,0 +1,214 @@
+'''
+Instructions from your teacher:
+Create the ugliest, most dysfunctional calculator possible.
+'''
+import tkinter
+import tkinter as tki
+from tkinter import *
+import random
+
+
+
+
+#turns the expression into a string
+expression = ""
+#=======================================FUNCTIONS=======================================
+def keypress(num): 
+	# point out the global expression variable 
+	global expression 
+
+	# concatenation of string 
+	expression = expression + str(num) 
+
+	# update the expression by using set method 
+	equation.set(expression) 
+
+
+# Function to evaluate the final expression 
+def equalpress(): 
+    #Checks for divide by zero error
+    try: 
+        global expression 
+        #This turns the STRING EXPRESSION into an answer then turns it back into a string
+        total = str(eval(expression)) 
+          
+        equation.set(total) 
+  
+        # initialze the expression variable 
+        # by empty string 
+        expression = "" 
+  
+    # if error is generate then handle 
+    # by the except block 
+    except: 
+  
+        equation.set(" Cannot divide by zero. ") 
+        expression = ""
+
+        
+# Function to clear the contents 
+# of text entry box 
+def clear(): 
+	global expression 
+	expression = "" 
+	equation.set("")
+
+#This will allow the user to close the window.
+def close_window (): 
+    CalculatorWindow.destroy()
+
+#This function will allow us to create the button.  Below, we
+#are using a for loop which checks for how many times the for loop runs.
+#Every 3 or 4 time it loops, we will be replacing the row and column placing
+#as well as the display text.  
+def makeButton():
+        global rowPlacing
+        global columnPlacing
+        global columnInstance
+        global intNum
+        #These are the numbers for the position in which we'll
+        #place the numbers/widgets
+        button.grid(row = rowPlacing, column = columnPlacing)
+        columnInstance += 1
+        columnPlacing += 1
+        intNum +=1
+#=======================================FUNCTIONS=======================================
+
+
+#==========================================GUI==========================================
+# create a GUI window 
+CalculatorWindow = Tk() 
+
+# set the background colour of GUI window 
+
+
+# set the title of GUI window 
+CalculatorWindow.title("Calculator") 
+
+# set the configuration of GUI window 
+CalculatorWindow.geometry("460x290")
+
+ugliestCalculator = tkinter.Button(CalculatorWindow, text = "u̴̪͕͔͕͆̏͠g̷̨͖̥̙̮̟̼̈́̽̑̾̍̈͐͘ͅĺ̶̹̖̼̳̟̂̽̒̏̃̏̈̋͘͠͝í̷̛̛̥̐͑̓̓̌͊̑̀͠ē̶̡̨̢͙̭̺̦̈́͆̿͂̓̒͆s̵̞͉̦͖̙̪̖̜͚̤͎̼̾̓̾͊̂̀͗̿̏͌͆t̴̨̧̨̜͈̞̬̝̤͗̀̎͗̂̎̇̉͂̈́͊̀̍̉̿ ̴̨̮̫̎̈́̽̅͊͐̈̀͠c̶̡͎̞̰̜̖̜̣̻͕̮̩͔͓̿̿̒̒͌̍ͅa̴̧̧̘͓̯͈̘̓̀ͅl̷̺͔̞̥̰̈́̐͒͛̓͐̍͠͝c̵̼̣̼̘͙̻͖̔̑̈́̑͒̉͜͠͝ṵ̵͚͓̺͇̗̣̻͊̀l̴͎̱̗̜̫͓̝͉̞̲͓̣̽̐̓̒̇̇̋̚a̶̢̝̖̗͑̄͊͒͆͋̄͋͊t̸̛̜̤̠̖͉̞̟̃̓́̔̋̈́̎̚̚͘ớ̴̢̢̛̘͈̪̠͎͕̣͔̯̬̲͆̆̽̌̍̎͆̚͝r̵̦͉̾̔͛͛̽͒́͘͘",fg = 'white',
+                         bg = 'light blue', height = 2, width = 20, font = ("Arial", 8, "bold"))
+ugliestCalculator.grid(row=0,column=2)
+#==========================================GUI==========================================
+
+#===================================EXPRESSION &/ ENTRY BOX=================================
+
+
+equation = StringVar() 
+
+# create the text entry box for 
+# showing the expression . 
+expression_field = Entry(CalculatorWindow, textvariable=equation, width = 10, font = ("Arial", 15, "bold"),justify = 'right') 
+
+#creates a grid for us us to place the widgets.
+expression_field.grid(row = 2, column = 10, columnspan=15, ipadx=91) 
+
+expression_field.grid(row = 6, column = 0)
+equation.set('Click the numbers!') 
+#===================================EXPRESSION ENTRY BOX=================================
+
+#=========================================VARIABLES======================================
+#This will help us to check how many times the for loop has gone.
+columnInstance = 0
+
+#This will be our number in which we press and is displayed on the widgets
+intNum = 1
+
+#This allow us to fix the columns in which the widgets are placed in
+columnPlacing = 0
+
+#=========================================VARIABLES======================================
+
+
+#==========================================BUTTONS=======================================          
+#Creates a button
+for x in range(10):
+
+        strTextNum = random.randint(0,9)
+        #This will be the number that is going to be pressed
+        #as well as the number that will be displayed on the
+        #widget of the claculator.
+        button= Button(CalculatorWindow, text = strTextNum, fg='blue', bg = 'pink',
+                command=lambda x=random.randint(0,9):keypress(x), height = 1, width = 7)
+        #Every third time the column occurs, add one to it. Once it reaches 3,
+        #go back to 0
+        #SECOND ROW, consists of the numbers 1, 2, 3, and 4.
+        #If the for loop hasn't gone over 3 yet, then add 1 to the column.
+        if columnInstance <= 3:
+                rowPlacing = 8
+                makeButton()
+                if columnInstance == 4:
+                        button.grid(row = 1, column = 0)
+                        columnPlacing = 1
+        #THIRD ROW consists of the numbers 4, 5, and 6
+        elif columnInstance <= 6:
+                rowPlacing = 4
+                makeButton()
+                '''
+                if columnInstance == 7:
+                        button.grid(row = 7, column = 0)
+                        columnPlacing = 1
+                        '''
+        #FOURTH ROW consists of the number 7,8 and 9
+        elif columnInstance <= 8:
+                rowPlacing = 5
+                makeButton()
+
+def fnMultWindows():
+        for x in range(20):
+                popup = tki.Tk()
+                popup.geometry('200x100')
+                popup.wm_title("Are you sure?")
+                label=tki.Label(popup,text='Are you sure?',font=('Times New Romans',12))
+                
+#Extra buttons
+button0 = Button(CalculatorWindow, text='surprise!', fg='yellow',
+                 bg='black',command=fnMultWindows, height=1, width=7) 
+button0.grid(row=6, column=1) 
+
+#PLus acts as the subtraction button
+plus = Button(CalculatorWindow, text=' + ', fg='yellow',
+              bg='black',command=lambda: keypress("-"), height=1, width=7) 
+plus.grid(row=3, column=1) 
+
+#Minus acts as the division button
+minus = Button(CalculatorWindow, text=' - ', fg='yellow',
+               bg='black',command=lambda: keypress("/"), height=1, width=7) 
+minus.grid(row=0, column=3) 
+
+#Multiply acts as the equal button
+multiply = Button(CalculatorWindow, text=' * ', fg='yellow',
+                  bg='black',command=equalpress, height=1, width=7) 
+multiply.grid(row=5, column=0) 
+
+#divide acts as the plus button
+divide = Button(CalculatorWindow, text=' / ', fg='yellow',
+                bg='black',command=lambda: keypress("+"), height=1, width=7) 
+divide.grid(row=6, column=3) 
+
+#Equal acts as the decimal button
+equal = Button(CalculatorWindow, text=' = ', fg='yellow',
+               bg='black',command=lambda: keypress("."), height=1, width=7) 
+equal.grid(row=5, column=2) 
+
+#decimal acts as the clear button
+decimal = Button(CalculatorWindow, text='.', fg='yellow',
+               bg='black',command=clear, height=1, width=7) 
+decimal.grid(row=3, column='0')
+
+#clear acts as the multiplication button
+clear = Button(CalculatorWindow, text='Dont click', fg='yellow',
+               bg='black',command=lambda: keypress("*"), height=1, width=7) 
+clear.grid(row=7, column='0')
+
+
+#Exit button
+btnExit = tkinter.Button(CalculatorWindow, text = "Exit here",fg = 'yellow',
+                         bg = 'black', command = close_window, height = 1, width = 7)
+btnExit.grid(row=0, column=0)
+#==========================================BUTTONS======================================= 
+
+# start the GUI 
+CalculatorWindow.mainloop() 
