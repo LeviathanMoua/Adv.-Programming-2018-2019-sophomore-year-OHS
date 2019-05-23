@@ -1,0 +1,87 @@
+'''
+Instructions from your teacher:
+Once you get your data into a database.  Query the database:
+
+1.  Display Mary, Year, and Count
+2.  Display Emma, Year,  Count (graph)
+3.  Display Floyd, Year,  Count (graph)
+4.  Display Bertha, Year, Count (graph)
+5.  Display Rihanna, Year, Count (graph)
+'''
+
+import sqlite3
+
+conn = sqlite3.connect("dbBabyNames.db")
+c = conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS tblBabyNames(State CHAR(2), Gender CHAR(1), Year INT, Name TEXT, Amount INT)")
+
+fileBabyNames = 'BabyNames.txt'
+fileNames = open(fileBabyNames,'r')
+
+def funInsertingNames():
+    line=''
+    fileNames = open(fileBabyNames,'r')
+    for x in range(12):
+        arrNames = fileNames.readline().split(",")
+        strState = arrNames[0]
+        strGender = arrNames[1]
+        intYear = int(arrNames[2])
+        strName = arrNames[3]
+        intAmount = arrNames[4]
+        arrAmount = intAmount.split("\\")
+        intAmount = int(arrAmount[0])
+        c.execute("INSERT INTO tblBabyNames(State, Gender, Year, Name, Amount) VALUES(:insState, :insGender, :insYear, :insName, :insAmount)", {'insState':strState,'insGender':strGender,'insYear':intYear,'insName':strName,'insAmount':intAmount})
+        conn.commit()
+
+funInsertingNames()
+
+
+def get_posts():
+    c.execute("SELECT * FROM tblbabyNames")
+
+    print(c.fetchall())
+
+get_posts()
+
+inpBabyName1 = input("\nPlease enter the  first baby name(Make sure to Capitolize the first letter! Also, comment out line 22 or 25 after the first use.:")
+
+inpBabyName2 = input("Please enter the second baby name(Make sure to Capitolize the first letter! Also, comment out line 22 or 25 after the first use.:")
+
+inpBabyName3 = input("Please enter the third baby name(Make sure to Capitolize the first letter! Also, comment out line 22 or 25 after the first use.:")
+
+inpBabyName4 = input("Please enter the fourth  baby name(Make sure to Capitolize the first letter! Also, comment out line 22 or 25 after the first use.:")
+
+
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName1,))
+findAllBabyName1 = c.fetchone()
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName2,))
+findAllBabyName2 = c.fetchone()
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName3,))
+findAllBabyName3 = c.fetchone()
+c.execute("SELECT EXISTS(SELECT 1 FROM tblBabyNames WHERE Name=? )", (inpBabyName4,))
+findAllBabyName4 = c.fetchone()
+
+if findAllBabyName1[0] == 1 and findAllBabyName2[0] == 1 and findAllBabyName3[0] == 1 and findAllBabyName4[0] == 1:#If the number is in the table
+#Then print out the babynames
+  sql = "SELECT * FROM tblBabyNames WHERE Name=?"
+  c.execute(sql,(str(inpBabyName1),))
+  BabyNameInfo1 = c.fetchall()
+  c.execute(sql,(str(inpBabyName2),))
+  BabyNameInfo2 = c.fetchall()
+  c.execute(sql,(str(inpBabyName3),))
+  BabyNameInfo3 = c.fetchall()
+  c.execute(sql,(str(inpBabyName4),))
+  BabyNameInfo4 = c.fetchall()
+  for x in range(len(BabyNameInfo1)):
+    for x in range(len(BabyNameInfo2)):
+      for x in range(len(BabyNameInfo3)):
+        for x in range(len(BabyNameInfo4)):
+          
+          print("Succesfully transfered the names from the text file to the database!\n\n")
+          print(BabyNameInfo4[x])
+        print(BabyNameInfo3[x])
+      print(BabyNameInfo2[x])
+    print(BabyNameInfo1[x])
+    
+else:
+    print ("\nBaby name not in is not in the database table which also means that the baby name was not in the text file.")
