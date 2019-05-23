@@ -1,0 +1,26 @@
+'''
+Create code for participation grade.
+'{}'.format
+'''
+
+print('{} {}'.format('apple', 'pear'))
+
+print('{} {}'.format(1,2))
+
+print('{1} {0}'.format('apple','pear'))
+
+print('{:10}'.format('cat'))
+
+print('{:+>10}'.format('cat'))
+
+print('{:+<10}'.format('cat'))
+
+print('{:^10}'.format('cat'))
+
+print('{:.5}'.format('catopia'))
+
+print('{:10.5}'.format('catopia'))
+
+print('{:d}'.format(546))
+
+print('{:f}'.format(546.0895423423))
