@@ -1,0 +1,429 @@
+'''
+Instructions from your teacher:
+Find 3 paintings on-line for each artist.
+Create this menu and sub-menu to navigate
+to the paintings.  This requires the use of a compiler (WinPython).
+'''
+#J Moua
+#Advanced Programming
+#4th Hour
+
+import wx
+import webbrowser
+
+#This class is the frame of the paintings depending on which artist you choose.
+#For example, if you chose Paul Cezanne, there will be a key ID that is equal to "Paul Cezanne" and
+#if they keyID equals Paul Cezanne, then this class will bring you to his paintings and his only.
+
+#self.Bind(wx.EVT_BUTTON,self.Cezanne,PaulCezanneButton)
+class paintingsOfTheSelectedArtistFrame(wx.Frame):
+
+    #===========WEB BROWSER================
+    #Everything in here is how we are going to be opening the web browse.
+    #Once the user clicks the image,
+    #we will bind that to the functions below which opens the webbrowser and shows us where the image came form. 
+    def AugusteRenoir_LuncheonOfTheBoatingParty(self,event):
+        webbrowser.open('https://www.overstockart.com/preframed/luncheon-of-the-boating-party-pre-framed-1120400649')
+    def AugusteRenoir_DiscardedRoses(self,event):
+        webbrowser.open('https://www.overstockart.com/preframed/discarded-roses-prefr-7870g24x36')
+    def AugusteRenoir_YoungGirlsAtThePiano(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/renoir-young-girls-at-the-piano&option_id=5885')
+    def ClaudeMonet_GardenPathAtGiverny(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/garden-path-at-giverny-claude-monet&option_id=2727')
+    def ClaudeMonet_MadameMonetAndHerSon(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/monet-madame-monet-and-her-son-932268092&option_id=2722')
+    def ClaudeMonet_Lilies(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/monet-water-lilies-273834739-1082029984&option_id=5980')
+    def VincentVanGogh_Irises(self,event):
+        webbrowser.open('https://www.overstockart.com/search/vincent%20van%20gogh')
+    def VincentVanGogh_BranchesOfAnAlmondTreeInBlossom(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/van-gogh-branches-of-an-almond-tree-in-blossom-1987261588&option_id=3348')
+    def VincentVanGogh_StarryNight(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/van-gogh-starry-night&option_id=5767')
+    def GeorgesSeurat_SundayAfternoonOnTheIslandOfLaGrandeJatte(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/seurat-sunday-afternoon-on-the-island-of-la-grande-jatte&option_id=2324')
+    def GeorgesSeurat_TheEiffelTower(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/seurat-the-eiffel-tower&option_id=6074')
+    def GeorgesSeurat_GrayWeather(self,event):
+        webbrowser.open('https://www.overstockart.com/preframed/gray-weather-prefr-x4006')
+    def PaulCezanne_CardPlayersWithPipes(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/card-players-with-pipes&option_id=5486')
+    def PaulCezanne_StillLifeWithOnoinsAndBottle(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/still-life-with-onions-and-bottle&option_id=2181') 
+    def PaulCezanne_Chateau(self,event):
+        webbrowser.open('https://www.overstockart.com/painting/cezanne-chateau&option_id=2180')
+    #===========WEB BROWSER================
+        
+    def  __init__(self, keyID, title, parent=None):
+        wx.Frame.__init__(self,parent=parent,title=title,size=(1000,700))
+        panel = wx.Panel(self)
+        self.SetBackgroundColour('black')
+        self.Center()
+        self.Show(True)
+
+             
+        #====================AUGSUTE RENOIR======================
+        #If the key id is auguste renoir, add his paintings here.
+        if keyID == "Auguste Renoir":
+            #=================================IMAGES====================================
+            #Luncheon of the boating party
+            #https://www.overstockart.com/preframed/luncheon-of-the-boating-party-pre-framed-970767044
+            AugusteRenoirButtonImageLuncheonBoatingParty = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Auguste Renoir\Auguste Renoir Luncheon of the boating party.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Discarded roses
+            #https://www.overstockart.com/preframed/discarded-roses-prefr-7870g24x36
+            AugusteRenoirButtonImageDiscardedRoses = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Auguste Renoir\Auguste Renoir Discarded Roses.jpg', wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Young girls at the piano
+            #https://www.overstockart.com/painting/renoir-young-girls-at-the-piano&option_id=5953
+            AugusteRenoirButtonImageYoungGirlsPiano = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Auguste Renoir\Auguste Renoir Young girls at the piano.jpg', wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            #=================================IMAGES====================================
+
+
+            #================================BUTTONS====================================
+            #This turns the images into a button allowing us to click and also view them.
+            AugusteRenoirButtonLuncheonBoatingParty = wx.BitmapButton(panel,-1,AugusteRenoirButtonImageLuncheonBoatingParty,pos=(15,40),size=(300,219))
+            AugusteRenoirButtonDiscardedRoses= wx.BitmapButton(panel,-1,AugusteRenoirButtonImageDiscardedRoses,pos=(650,15),size=(300,259))
+            AugusteRenoirButtonYoungGirlsPiano= wx.BitmapButton(panel,-1,AugusteRenoirButtonImageYoungGirlsPiano,pos=(350,335),size=(250,319))
+            #================================BUTTONS====================================
+
+            
+            #=================================TEXT======================================            
+            #Displays text.
+            AugusteRenoirTextLuncheonBoatingParty = wx.StaticText(panel,-1,"Luncheon of the boating party",(75,270))
+            AugusteRenoirTextDiscardedRoses  = wx.StaticText(panel,-1,"Discarded Roses",(650,280))
+            AugusteRenoirTextYoungGirlsPiano  = wx.StaticText(panel,-1,"Young Girls at the piano",(410,320))
+            
+            #Changes the color of the words.  
+            AugusteRenoirTextLuncheonBoatingParty.SetForegroundColour("#e6b800")
+            AugusteRenoirTextDiscardedRoses.SetForegroundColour("#e6b800")
+            AugusteRenoirTextYoungGirlsPiano.SetForegroundColour("#e6b800")
+            #=================================TEXT======================================
+
+            #================================BINDING==================================== 
+            self.Bind(wx.EVT_BUTTON,self.AugusteRenoir_LuncheonOfTheBoatingParty,AugusteRenoirButtonLuncheonBoatingParty)
+            self.Bind(wx.EVT_BUTTON,self.AugusteRenoir_DiscardedRoses,AugusteRenoirButtonDiscardedRoses)
+            self.Bind(wx.EVT_BUTTON,self.AugusteRenoir_YoungGirlsAtThePiano,AugusteRenoirButtonYoungGirlsPiano)
+            #================================BINDING==================================== 
+        #====================AUGSUTE RENOIR======================
+            
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            
+        #=====================CLAUDE MONET=======================     
+        #Elif keyID is Claude MOnet, then add his paintings
+        elif keyID == "Claude Monet":
+            #=================================IMAGES====================================
+            #Garden path at giverny
+            #https://www.overstockart.com/painting/garden-path-at-giverny-claude-monet&option_id=5990
+            ClaudeMonetButtonImageGardenPathAtGiverny = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Claude Monet\Claude Monet Garden path at Giverny RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Madame Monet and her son
+            #https://www.overstockart.com/painting/monet-madame-monet-and-her-son-932268092&option_id=2722
+            ClaudeMonetButtonImageMadameMonetAndHerSon = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Claude Monet\Claude Monet Madame Monet and her son RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Water lilies
+            #https://www.overstockart.com/painting/monet-water-lilies-273834739-1082029984&option_id=5980
+            ClaudeMonetButtonImageWaterLilies = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Claude Monet\Claude Monet Water lilies RESIZE1.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            #=================================IMAGES====================================
+
+
+            #================================BUTTONS====================================
+            ClaudeMonetButtonGardenPathAtGiverny = wx.BitmapButton(panel,-1,ClaudeMonetButtonImageGardenPathAtGiverny,pos=(20,25),size=(260,312))
+            ClaudeMonetButtonMadameMonetAndHerSon = wx.BitmapButton(panel,-1,ClaudeMonetButtonImageMadameMonetAndHerSon,pos=(695,15),size=(270,324))
+            ClaudeMonetButtonImageWaterLilies = wx.BitmapButton(panel,-1,ClaudeMonetButtonImageWaterLilies,pos=(290,380),size=(400,267))
+            #================================BUTTONS====================================
+
+            
+            #=================================TEXT======================================            
+            #Displays text.
+            ClaudeMonetTextGardenPathAtGiverny = wx.StaticText(panel,-1,"Garden Path at Giverny",(80,350))
+            ClaudeMonetMadameMonetAndHerSon  = wx.StaticText(panel,-1,"Madame Monet and Her Son",(750,350))
+            ClaudeMonetTextWaterLilies  = wx.StaticText(panel,-1,"Water Lilies",(450,360))
+            
+            #Changes the color of the words.  
+            ClaudeMonetTextGardenPathAtGiverny.SetForegroundColour("#e6b800")
+            ClaudeMonetMadameMonetAndHerSon.SetForegroundColour("#e6b800")
+            ClaudeMonetTextWaterLilies.SetForegroundColour("#e6b800")
+            #=================================TEXT======================================
+
+            #================================BINDING==================================== 
+            self.Bind(wx.EVT_BUTTON,self.ClaudeMonet_GardenPathAtGiverny,ClaudeMonetButtonGardenPathAtGiverny)
+            self.Bind(wx.EVT_BUTTON,self.ClaudeMonet_MadameMonetAndHerSon,ClaudeMonetButtonMadameMonetAndHerSon)
+            self.Bind(wx.EVT_BUTTON,self.ClaudeMonet_Lilies,ClaudeMonetButtonImageWaterLilies)
+            #================================BINDING==================================== 
+        #=====================CLAUDE MONET=======================
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        #===================VINCENT VAN GOGH=====================
+        elif keyID == "Vincent Van Gogh":
+            #=================================IMAGES====================================
+            #Images of the buttons which are the artist's painting.
+            #Irises
+            #https://www.overstockart.com/search/vincent%20van%20gogh
+            VincentVanGoghButtonImageIrises = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Vincent Van Gogh\Vincent Van Gogh Irises RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Branches of an Almond tree in blossom
+            #https://www.overstockart.com/painting/van-gogh-branches-of-an-almond-tree-in-blossom-1987261588&option_id=3348
+            VincentVanGoghButtonImageBranchesOfAnAlmondTreeInBlossom = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Vincent Van Gogh\Vincent Van Gogh Branches of an almond tree in blossom RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Starry night
+            #https://www.overstockart.com/painting/van-gogh-starry-night&option_id=5767
+            VincentVanGoghButtonStarryNight = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Vincent Van Gogh\VIncent Van Gogh Starry night RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            #=================================IMAGES====================================
+
+            
+            #================================BUTTONS====================================
+            #Creates the button and shows the images
+            VincentVanGoghButtonIrises = wx.BitmapButton(panel,-1,VincentVanGoghButtonImageIrises,pos=(20,25),size=(350,280))
+            VincentVanGoghButtonBranchesOfAnAlmondTreeInBlossom = wx.BitmapButton(panel,-1,VincentVanGoghButtonImageBranchesOfAnAlmondTreeInBlossom,pos=(550,20),size=(380,285))
+            VincentVanGoghButtonStarryNight = wx.BitmapButton(panel,-1,VincentVanGoghButtonStarryNight,pos=(290,380),size=(400,266))
+            #================================BUTTONS====================================
+
+
+            #=================================TEXT======================================            
+            #Displays text.
+            VincentVanGoghTextIrises = wx.StaticText(panel,-1,"Irises",(160,310))
+            VincentVanGoghTextBranchesOfAnAlmondTreeInBlossom  = wx.StaticText(panel,-1,"Branches Of An Almond Tree In Blossom",(650,310))
+            VincentVanGoghTextStarryNight  = wx.StaticText(panel,-1,"Starry night",(460,360))
+            
+            #Changes the color of the words.  
+            VincentVanGoghTextIrises.SetForegroundColour("#e6b800")
+            VincentVanGoghTextBranchesOfAnAlmondTreeInBlossom.SetForegroundColour("#e6b800")
+            VincentVanGoghTextStarryNight.SetForegroundColour("#e6b800")
+            #=================================TEXT======================================
+
+            #================================BINDING==================================== 
+            self.Bind(wx.EVT_BUTTON,self.VincentVanGogh_Irises,VincentVanGoghButtonIrises)
+            self.Bind(wx.EVT_BUTTON,self.VincentVanGogh_BranchesOfAnAlmondTreeInBlossom,VincentVanGoghButtonBranchesOfAnAlmondTreeInBlossom)
+            self.Bind(wx.EVT_BUTTON,self.VincentVanGogh_StarryNight,VincentVanGoghButtonStarryNight)
+            #================================BINDING==================================== 
+        #===================VINCENT VAN GOGH=====================
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        #====================GEORGES SEURAT======================                
+        elif keyID == "Georges Seurat":
+            #=================================IMAGES====================================
+            #IMAGES
+            #Sunday afternoon on the island of La Grande Jatte
+            #https://www.overstockart.com/painting/seurat-sunday-afternoon-on-the-island-of-la-grande-jatte&option_id=2324
+            GeorgesSeuratButtonImageSundayAfternoonOnTheIslandOfLaGrandeJatte= wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Georges Seurat\Georges Seurat Sunday afternoon on the island of La Grande Jatte RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+    
+            #The eiffel tower
+            #https://www.overstockart.com/painting/seurat-the-eiffel-tower&option_id=6074
+            GeorgesSeuratButtonImageTheEiffelTower = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Georges Seurat\Georges Seurat The Eiffel Tower RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Gray weather
+            #https://www.overstockart.com/preframed/gray-weather-prefr-x4006
+            GeorgesSeuratButtonImageTheGrayWeather = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Georges Seurat\Georges Seurat Gray weather RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            #=================================IMAGES====================================
+
+
+            #================================BUTTONS====================================
+            GeorgesSeuratButtonSundayAfternoon = wx.BitmapButton(panel,-1,GeorgesSeuratButtonImageSundayAfternoonOnTheIslandOfLaGrandeJatte,pos=(20,25),size=(390,260))
+            GeorgesSeuratButtonTheEiffelTower = wx.BitmapButton(panel,-1,GeorgesSeuratButtonImageTheEiffelTower,pos=(400,350),size=(200,300))
+            GeorgesSeuratButtonTheGrayWeather = wx.BitmapButton(panel,-1,GeorgesSeuratButtonImageTheGrayWeather,pos=(600,10),size=(360,293))
+            #================================BUTTONS====================================
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            #=================================TEXT======================================            
+            #Displays text.
+            GeorgesSeuratTextSundayAfternoon = wx.StaticText(panel,-1,"Sunday Afternoon on the island of La Grande Jatte",(75,290))
+            GeorgesSeuratTextTheEiffelTower  = wx.StaticText(panel,-1,"The Eiffel Tower",(460,330))
+            GeorgesSeuratTextGrayWeather  = wx.StaticText(panel,-1,"Gray Weather",(740,305))
+            
+            
+            #Changes the color of the words.  
+            GeorgesSeuratTextSundayAfternoon.SetForegroundColour("#e6b800")
+            GeorgesSeuratTextTheEiffelTower.SetForegroundColour("#e6b800")
+            GeorgesSeuratTextGrayWeather.SetForegroundColour("#e6b800")
+            #=================================TEXT======================================
+
+            #================================BINDING==================================== 
+            self.Bind(wx.EVT_BUTTON,self.GeorgesSeurat_SundayAfternoonOnTheIslandOfLaGrandeJatte,GeorgesSeuratButtonSundayAfternoon)
+            self.Bind(wx.EVT_BUTTON,self.GeorgesSeurat_TheEiffelTower,GeorgesSeuratButtonTheEiffelTower)
+            self.Bind(wx.EVT_BUTTON,self.GeorgesSeurat_GrayWeather,GeorgesSeuratButtonTheGrayWeather)
+            #================================BINDING====================================     
+        #====================GEORGES SEURAT======================
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        #=====================PAUL CEZANNE=======================
+        elif keyID == "Paul Cezanne":
+            #=================================IMAGES====================================
+            #Images
+            #card players with pipes
+            #https://www.overstockart.com/painting/card-players-with-pipes&option_id=5486
+            PaulCezanneButtonImageCardPlayersWithPipes= wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Paul Cezanne\Paul Cezanne Card players with pipes RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+
+            #Still life with onions and bottle
+            #https://www.overstockart.com/painting/still-life-with-onions-and-bottle&option_id=2181
+            PaulCezanneButtonImageStillLifeWithOnionsAndBottle= wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Paul Cezanne\Paul Cezanne Still life with onions and bottle RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            
+            #Chateau
+            #https://www.overstockart.com/painting/cezanne-chateau&option_id=2180
+            PaulCezanneButtonImageChateau= wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Paul Cezanne\Paul Cezanne Chateau RESIZE.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            #=================================IMAGES====================================
+            
+
+            #================================BUTTONS====================================
+            PaulCezanneButtonCardPlayersWithPipes = wx.BitmapButton(panel,-1,PaulCezanneButtonImageCardPlayersWithPipes,pos=(20,25),size=(280,233))
+            PaulCezanneButtonStillLifeWithOnionsAndBottle = wx.BitmapButton(panel,-1,PaulCezanneButtonImageStillLifeWithOnionsAndBottle,pos=(360,400),size=(280,233))
+            PaulCezanneButtonChateau = wx.BitmapButton(panel,-1,PaulCezanneButtonImageChateau,pos=(690,15),size=(275,233))
+            #================================BUTTONS====================================
+
+
+            #=================================TEXT======================================            
+            #Displays text.
+            PaulCezanneTextCardPlayersWithPipes = wx.StaticText(panel,-1,"Card players with pipes",(90,257))
+            PaulCezanneTextStillLifeWithOnionsAndBottle  = wx.StaticText(panel,-1,"Still life with onion and bottle",(420,380))
+            PaulCezanneTextChateau  = wx.StaticText(panel,-1,"Chateau",(810,250))
+            
+            #Changes the color of the words.  
+            PaulCezanneTextCardPlayersWithPipes.SetForegroundColour("#e6b800")
+            PaulCezanneTextStillLifeWithOnionsAndBottle.SetForegroundColour("#e6b800")
+            PaulCezanneTextChateau.SetForegroundColour("#e6b800")
+            #=================================TEXT======================================
+
+            
+            #================================BINDING==================================== 
+            self.Bind(wx.EVT_BUTTON,self.PaulCezanne_CardPlayersWithPipes,PaulCezanneButtonCardPlayersWithPipes)
+            self.Bind(wx.EVT_BUTTON,self.PaulCezanne_StillLifeWithOnoinsAndBottle,PaulCezanneButtonStillLifeWithOnionsAndBottle)
+            self.Bind(wx.EVT_BUTTON,self.PaulCezanne_Chateau,PaulCezanneButtonChateau)
+            #================================BINDING====================================
+            
+        #=====================PAUL CEZANNE=======================
+            self.Show(True)
+   
+
+
+class MainFrame(wx.Frame):
+
+    def __init__(self,*args,**kwargs):
+        super(MainFrame, self).__init__(*args, **kwargs, size=(1280,720), style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX)
+        #Brings us to the user interface
+        self.UserInterface()
+        #Centers the window
+        self.Centre()
+        self.Show()
+
+    def UserInterface(self):
+        panel = wx.Panel(self)
+        self.SetBackgroundColour('blue')
+
+        #This is the font for us to be able to set fonts to words that we want to use.
+        font=wx.Font(18, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
+
+        #=================================IMAGES====================================
+        AugusteRenoirImageOfButton = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Auguste Renoir\Auguste Renoir.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        ClaudeMonetButtonImage = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Claude Monet\Claude Monet.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        VincentVanGoghButtonImage = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Vincent Van Gogh\Vincent Van Gogh.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        GeorgesSeuratButtonImage = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Georges Seurat\Georges Seurat.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        PaulCezanneButtonImage = wx.Image('E:\programming\Assignments\French Impressionism assignment\Artists and Paintings\Paul Cezanne\Paul Cezanne.jpg',wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        #=================================IMAGES====================================
+
+
+        #================================BUTTONS====================================
+        AugusteRenoirButton = wx.BitmapButton(panel,-1,AugusteRenoirImageOfButton,pos=(220,85),size=(200,250))
+        ClaudeMonetButton = wx.BitmapButton(panel,-1,ClaudeMonetButtonImage,pos=(540,85),size=(200,250))
+        VincentVanGoghButton = wx.BitmapButton(panel,-1,VincentVanGoghButtonImage,pos=(860,85),size=(200,250))
+        GeorgesSeuratButton = wx.BitmapButton(panel,-1,GeorgesSeuratButtonImage,pos=(380,380),size=(200,250))
+        PaulCezanneButton = wx.BitmapButton(panel,-1,PaulCezanneButtonImage,pos=(710,380),size=(200,250))
+        #================================BUTTONS====================================
+
+        
+        #=================================TEXT======================================    
+        #Renoir
+        #The first line, the variable, of course sets the variable of where the text should be.
+        #Then comes the second line which sets the color of the text and lastly, there's the font
+        AugusteRenoirText = wx.StaticText(panel,-1,"Auguste Renoir",(237,345))
+        AugusteRenoirText.SetForegroundColour("#e6b800")
+        AugusteRenoirText.SetFont(font)
+        #Monet
+        ClaudeMonetText = wx.StaticText(panel,-1,"Claude Monet",(566,345))
+        ClaudeMonetText.SetForegroundColour("#206020")
+        ClaudeMonetText.SetFont(font)
+        #VanGogh
+        VincentVanGoghText = wx.StaticText(panel,-1,"Vincent Van Gogh",(862,345))
+        VincentVanGoghText.SetForegroundColour("#3385ff")
+        VincentVanGoghText.SetFont(font)
+        #Seurat
+        GeorgesSeuratText = wx.StaticText(panel,-1,"Georges Seurat",(393,640))
+        GeorgesSeuratText.SetForegroundColour("#990099")
+        GeorgesSeuratText.SetFont(font)
+        #Cezanne
+        PaulCezanneText = wx.StaticText(panel,-1,"Paul Cezanne",(735,640))
+        PaulCezanneText.SetForegroundColour("#cc2900")
+        PaulCezanneText.SetFont(font)
+        #=================================TEXT======================================
+
+
+        #================================BINDING==================================== 
+        #Sets it to where when we click the image, it'll call one of the functions below to allow us to create a new window.
+        self.Bind(wx.EVT_BUTTON,self.Renoir,AugusteRenoirButton)
+        self.Bind(wx.EVT_BUTTON,self.Monet,ClaudeMonetButton)
+        self.Bind(wx.EVT_BUTTON,self.VanGogh,VincentVanGoghButton)
+        self.Bind(wx.EVT_BUTTON,self.Seurat,GeorgesSeuratButton)
+        self.Bind(wx.EVT_BUTTON,self.Cezanne,PaulCezanneButton)
+        #================================BINDING==================================== 
+
+
+        self.Show(True)
+    
+    #these classes allow us to set the title, keyID, and frame.  
+    def Renoir(self,event):
+        wx.Panel(self)
+        title = "Auguste Renoir's Works"
+        keyID='Auguste Renoir'
+        frame = paintingsOfTheSelectedArtistFrame(parent=wx.GetTopLevelParent(self),title=title,keyID=keyID)
+    def Monet(self,event):
+        wx.Panel(self)
+        title = "Claude Monet's Works"
+        keyID='Claude Monet'
+        frame = paintingsOfTheSelectedArtistFrame(parent=wx.GetTopLevelParent(self),title=title,keyID=keyID)
+
+    def VanGogh(self,event):
+        wx.Panel(self)
+        title = "Vincent Van Gogh's Works"
+        keyID='Vincent Van Gogh'
+        frame = paintingsOfTheSelectedArtistFrame(parent=wx.GetTopLevelParent(self),title=title,keyID=keyID)
+
+    def Seurat(self,event):
+        wx.Panel(self)
+        title = "Georges Seurat's Works"
+        keyID='Georges Seurat'
+        frame = paintingsOfTheSelectedArtistFrame(parent=wx.GetTopLevelParent(self),title=title,keyID=keyID)
+
+    def Cezanne(self,event):
+        wx.Panel(self)
+        title = "Paul Cezanne's Works"
+        keyID='Paul Cezanne'
+        frame = paintingsOfTheSelectedArtistFrame(parent=wx.GetTopLevelParent(self),title=title,keyID=keyID)
+        
+app = wx.App()
+MainFrame(None, title='French Impressionism')
+app.MainLoop()
+
+
+****************************************
+French Impressionism
+
+1. Auguste Renoir
+2. Claude Monet
+3. Vincent Van Gogh
+4. Georges Seurat
+5. Paul Cezanne
+6. Exit
+
+Please make a choice: 2
+	a. Impression Sunrise
+	b. San Giorgio Maggiore at Dusk
+	c. Water Lilies
+	d. Exit
+	Please make a choice: a
+
+Now, at this point, start the browser and go to this page.
+	https://www.claude-monet.com/impression-sunrise.jsp
+'''
