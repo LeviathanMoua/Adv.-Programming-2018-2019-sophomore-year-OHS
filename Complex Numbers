@@ -1,0 +1,420 @@
+'''
+Instructions from your teacher:
+Using the Fractions framework, please create a program that will add or multiply complex numbers.  User choice.
+'''
+
+'''
+COMPLEX NUMBERS
+J Moua
+4th Hr.
+Mr. Jackson
+'''
+import fractions
+
+#Addition Function
+def adding_complex_num():
+    #Arrays
+    imaginary_array = []
+    real_array = []
+#INPUTS
+    #Ask the user how many imaginary numbers he user has then asks them to input them.
+    iAskHowManyInputForImaginaryNum = int(input("\nHow many imaginary numbers would you like to input?"))
+    print("\n======================================")
+    for x in range(iAskHowManyInputForImaginaryNum):
+      iImaginaryNum = int(input("\nPlease enter an imaginary number:"))
+      imaginary_array.append(iImaginaryNum)
+      print("")
+    print("======================================")
+
+    #THis asks the user how many real numbers the user has then asks them to input them.
+    iAskHowManyInputForRealNum = int(input("How many real numbers would you like to input?"))
+    print("==================================================")
+    for x in range(iAskHowManyInputForRealNum):
+        iRealNum = int(input("\nPlease enter a real number:"))
+        real_array.append(iRealNum)
+    print("==================================================")
+
+#PROCESS
+    #These are the sum of the imaginary and real numbers.
+    iSumOfImaginaryNum = (sum(imaginary_array))
+    iSumOfRealNum = (sum(real_array))
+
+#OUTPUT
+    #If the imaginary number is greater than zero, add a plus sign to it.
+    if iSumOfImaginaryNum > 0:
+      print("{} {} {} {}{}".format("\nAnswer:", iSumOfRealNum, "+", iSumOfImaginaryNum, "i"))
+    #if the imaginary number is a negative then print it originally
+    else:
+      print("{} {}{}{}{}".format("\nAnswer:", iSumOfRealNum, " ", iSumOfImaginaryNum, "i"))
+
+    #Ask the user if they want to try other operators.
+    def ask_if_want_continue_function():
+      ask_if_want_to_continue = input("\n===========================================\nWould you like to continue with more?").upper()
+      
+      #If yes, go back to addition
+      if ask_if_want_to_continue == "yes".upper():
+        print("\n===========================================\n")
+        adding_complex_num()
+      #If no, ask if they want to continue with other operators.
+      elif ask_if_want_to_continue == "no".upper():
+
+        def ask_if_want_try_operators():
+          ask_if_continue_with_other_operators = input("\nWould you like to continue with other operators?").upper()
+          #If yes, take them back to the list of operators
+          if ask_if_continue_with_other_operators == "yes".upper():
+            control_center()
+          #If no, close the program.
+          elif ask_if_continue_with_other_operators == "No".upper():
+              print("\nGoodbye!")     
+              print("\n===========================================\n")
+              print("____________________________________________________________________________")
+          #Anything else that is typed will be seen as an invalid input.
+          else:
+            print("\nInvalid input!")
+            ask_if_want_try_operators()
+        #This calls the function that asks if you want to continue with the operators.
+        ask_if_want_try_operators()
+      #Anything else that is typed will be seen as an invalid input 
+      else:
+        print("\nInvalid Input")
+        ask_if_want_continue_function()
+    #This calls the whole function that asks if you want to continue with things
+    ask_if_want_continue_function()
+
+#Subtraction Function
+def subtracting_complex_num():
+    #Arrays
+    imaginary_array = []
+    real_array = []
+#INPUTS
+    #Ask the user how many imaginary numbers he user has then asks them to input them.
+    iAskHowManyInputForImaginaryNum = int(input("\nHow many imaginary numbers would you like to input?"))
+    print("\n======================================")
+    for x in range(iAskHowManyInputForImaginaryNum):
+      iImaginaryNum = int(input("\nPlease enter an imaginary number:"))
+      imaginary_array.append(iImaginaryNum)
+      print("")
+    print("======================================")
+
+    #THis asks the user how many real numbers the user has then asks them to input them.
+    iAskHowManyInputForRealNum = int(input("How many real numbers would you like to input?"))
+    print("==================================================")
+    for x in range(iAskHowManyInputForRealNum):
+        iRealNum = int(input("\nPlease enter a real number:"))
+        real_array.append(iRealNum)
+    print("==================================================")
+
+#PROCESS
+    #These are the sum of the imaginary and real numbers.
+    iDifferenceImaginary = imaginary_array[0] - sum(imaginary_array[1:])
+
+    iDifferenceReal = real_array[0] - sum(real_array[1:])
+
+#OUTPUT
+    #If the imaginary number is greater than zero, add a plus sign to it.
+    if iDifferenceImaginary > 0:
+      print("{} {} {} {}{}".format("\nAnswer:", iDifferenceReal, "+", iDifferenceImaginary, "i"))
+    #if the imaginary number is a negative then print it originally
+    else:
+      print("{} {}{}{}{}".format("\nAnswer:", iDifferenceReal, " ", iDifferenceImaginary, "i"))
+
+    #Ask the user if they want to try other operators.
+    def ask_if_want_continue_function():
+      ask_if_want_to_continue = input("\n===========================================\nWould you like to continue with more?").upper()
+      
+      #If yes, go back to addition
+      if ask_if_want_to_continue == "yes".upper():
+        print("\n===========================================\n")
+        subtracting_complex_num()
+      #If no, ask if they want to continue with other operators.
+      elif ask_if_want_to_continue == "no".upper():
+
+        def ask_if_want_try_operators():
+          ask_if_continue_with_other_operators = input("\nWould you like to continue with other operators?").upper()
+          #If yes, take them back to the list of operators
+          if ask_if_continue_with_other_operators == "yes".upper():
+            control_center()
+          #If no, close the program.
+          elif ask_if_continue_with_other_operators == "No".upper():
+              print("\nGoodbye!")     
+              print("\n===========================================\n")
+              print("____________________________________________________________________________")
+          #Anything else that is typed will be seen as an invalid input.
+          else:
+            print("\nInvalid input!")
+            ask_if_want_try_operators()
+        #This calls the function that asks if you want to continue with the operators.
+        ask_if_want_try_operators()
+      #Anything else that is typed will be seen as an invalid input 
+      else:
+        print("\nInvalid Input")
+        ask_if_want_continue_function()
+    #This calls the whole function that asks if you want to continue with things
+    ask_if_want_continue_function()
+
+
+#Multiplication function
+def multiplying_complex_num():
+
+#INPUTS
+  #Asks the user for the inputs
+  print("==================================================")
+  iRealNum1 = int(input("\nPlease enter the real first number:"))  
+
+  iImaginaryNum1 = int(input("\nPlease enter the first imaginary number:"))
+  iRealNum2 = int(input("\nPlease enter the second real number:"))
+
+  iImaginaryNum2 = int(input("\nPlease enter the second imaginary number:"))
+  print("==================================================")
+
+#PROCESS
+  #FOIL method
+  iFirst = (iRealNum1 * iRealNum2)
+  iOuter = (iRealNum1 * iImaginaryNum2)
+  iInner = (iImaginaryNum1 * iRealNum2)
+  iLast = (iImaginaryNum1 * iImaginaryNum2)
+
+  #Group like terms for the imaginary numbers
+  iGroupLikeTermsImaginary = (iOuter + iInner)
+
+  #Multiply the last by negative one
+  iSquareRootNegOneToSecPower = (iLast * -1)
+
+  #Group like terms for the real numbers
+  iGroupLikeTermsReal = (iFirst + iSquareRootNegOneToSecPower)
+
+
+  #Add a plus sign before the imaginary number if the imaginary number is a positive
+  if iGroupLikeTermsImaginary > 0:
+    print("{} {} {} {}{}".format("\nYour answer is:", iGroupLikeTermsReal, "+",iGroupLikeTermsImaginary, "i"))
+   #if the imaginary number is a negative then print it originally
+  else:
+    print("{} {} {}{}".format("\nYour answer is:", iGroupLikeTermsReal, iGroupLikeTermsImaginary, "i"))
+
+  #This function ass you if you would like to ocntinue multiplying
+  def ask_if_want_continue():
+    ask_if_want_to_continue = input("\n===========================================\nWould you like to continue with more?").upper()
+    
+    #If yes, tae the user back to multiply
+    if ask_if_want_to_continue == "yes".upper():
+      print("\n===========================================\n")
+      multiplying_complex_num()
+    #if no, ask the user if they would like to continue with other operators
+    elif ask_if_want_to_continue == "no".upper():
+
+      #This function asks you if you would like to continue with other operators.
+      def ask_if_want_try_other_operators():
+
+        ask_if_continue_with_other_operators = input("\nWould you like to continue with other operators?").upper()
+        
+        #If yes, take the user back to the list of operators
+        if ask_if_continue_with_other_operators == "yes".upper():
+          print("\n===========================================\n")
+          control_center()
+        
+        #If no, then close the program.
+        elif ask_if_continue_with_other_operators == "No".upper():
+          print("\nGoodbye!")     
+          print("\n===========================================\n")
+          print("____________________________________________________________________________")
+        
+        #If anything else is typed then it is an invalid input.
+        else:
+          print("\nInvalid Input!")
+          ask_if_want_try_other_operators()
+      #This cals the function that asks the user i fthey want to continue with other operators.
+      ask_if_want_try_other_operators()
+    else:
+      print("\nInvalid input!")
+      ask_if_want_continue()
+  #This calls the program which asks if you want to continue
+  ask_if_want_continue()
+
+#Dividing function
+def dividing_complex_numbers():
+#INPUT
+  #Asks users for their input
+  print("\n____________________________________________\n=========\nNumerator\n=========")
+  iRealNum1 = int(input("\nPlease enter the real first number:"))  
+
+  iImaginaryNum1 = int(input("\nPlease enter the first imaginary number:"))
+
+  print("\n===========\nDenominator\n===========")
+  iRealNum2 = int(input("\nPlease enter the second real number:"))
+
+  iImaginaryNum2 = int(input("\nPlease enter the second imaginary number:"))
+
+  iImaginaryConjugate = (iImaginaryNum2 * -1)
+
+#PROCESS
+  #Numerator
+  iFirst = (iRealNum1 * iRealNum2)
+  iOuter = (iRealNum1 * iImaginaryConjugate)
+  iInner = (iImaginaryNum1 * iRealNum2)
+  iLast = (iImaginaryNum1 * iImaginaryConjugate)
+
+  #Grouping like terms
+  iNumeratorGroupLikeTermsImaginary = (iOuter + iInner)
+  iNumeratorSquareRootNegOneToSecPower = (iLast * -1)
+  iNumeratorGroupLikeTermsReal = (iFirst + iNumeratorSquareRootNegOneToSecPower)
+
+  #Denominator
+  iDenominatorGroupLikeTermsReal = (iRealNum2 ** 2)
+  iDenominatorGroupLikeTermsImaginary = (iImaginaryNum2 * iImaginaryConjugate)
+  iTurnImaginaryToRealNum = (iDenominatorGroupLikeTermsImaginary * -1)
+  iDenominator = (iDenominatorGroupLikeTermsReal + iTurnImaginaryToRealNum)
+
+#OUTPUT
+  #This finds the greatest common factor
+  iGCF = fractions.gcd(iNumeratorGroupLikeTermsReal, fractions.gcd(iNumeratorGroupLikeTermsImaginary, iDenominator))
+
+  #If the real number, imaginary number, and denominator divded by 4 gives us a
+  #remainder of zero, then continue on below to simplify
+  if iNumeratorGroupLikeTermsReal % iGCF == 0 and iNumeratorGroupLikeTermsImaginary % iGCF == 0 and iDenominator % iGCF == 0:
+    #Simplifies the Real, imaginary number and the denominator.
+    iReducedNumeratorRealNum = int(iNumeratorGroupLikeTermsReal / iGCF)
+    iReducedNumeratorImaginaryNum = int(iNumeratorGroupLikeTermsImaginary / iGCF)
+    iReducedDenominator = int(iDenominator / iGCF)
+
+    #If the imaginary number is greater than zero, add an addition sign to it.
+    if  iReducedNumeratorImaginaryNum > 0:
+      print("{}{} {} {} {}{} {} {}".format("Your answer:", "\n",iReducedNumeratorRealNum,"+",iReducedNumeratorImaginaryNum,"i", "/",iReducedDenominator))
+     #if the imaginary number is a negative then print it originally
+    else:
+      print("{}{} {} {}{} {} {}".format("Your answer:", "\n",iReducedNumeratorRealNum,  iReducedNumeratorImaginaryNum,"i", "/",iReducedDenominator))
+
+  #Add a plus sign to the imaginary number if it's positive
+  elif  iNumeratorGroupLikeTermsImaginary > 0:
+    print("{}{} {} {} {}{} {} {}".format("Your answer:", "\n",iNumeratorGroupLikeTermsReal,"+",iNumeratorGroupLikeTermsImaginary,"i", "/",iDenominator))
+  #If the imaginary number is a negative then print it originaly
+  else:
+    print("{}{} {} {}{} {} {}".format("Your answer:", "\n",iNumeratorGroupLikeTermsReal,iNumeratorGroupLikeTermsImaginary,"i", "/",iDenominator))
+
+  print("____________________________________________")
+
+  #Ask the user if they want to continue with more of the division problems
+  def ask_if_want_continue():
+
+    ask_if_want_to_continue = input("\n===========================================\nWould you like to continue with more?").upper()
+
+      #If yes, bring them back to division
+    if ask_if_want_to_continue == "yes".upper():
+      print("\n===========================================\n")
+      dividing_complex_numbers()
+
+      #If no, ask them if they would like to continue with other operators.
+    elif ask_if_want_to_continue == "no".upper():
+      
+      #this function asks the user if they would like to ocntinue with other operators.
+      def ask_if_want_try_other_operators():
+        ask_if_continue_with_other_operators = input("\nWould you like to continue with other operators?").upper()
+
+        #If yes, bring them back to the list of operators
+        if ask_if_continue_with_other_operators == "yes".upper():
+          print("\n===========================================\n")
+          control_center()
+        #If no, then close the program.
+        elif ask_if_continue_with_other_operators == "No".upper():
+          print("\nGoodbye!")     
+          print("\n===========================================\n")
+          print("____________________________________________________________________________")
+        else:
+          print("\nInvalid Input!")
+          ask_if_want_try_other_operators()
+      ask_if_want_try_other_operators()
+
+    #Anything else that is typed wil be an invalid input and require you to input something else again
+    else:
+      print("\nInvalid Input!")
+      ask_if_want_continue()
+  #This calls the function that ass the user if they want to continue dividng
+  ask_if_want_continue()
+
+
+#This controls all of the main functions such as the addition, multiplication, division, and subtraction.
+def control_center():
+  print("____________________________________________________________________________")
+  ask_for_which_operation = input("\nWould you like to add, multiply, divide, or subtract complex numbers: ").upper()
+
+  if ask_for_which_operation == "add".upper():
+    adding_complex_num()
+
+  elif ask_for_which_operation == "subtract".upper():  
+    subtracting_complex_num()
+
+  elif ask_for_which_operation == "multiply".upper():
+    multiplying_complex_num()
+
+  elif ask_for_which_operation == "divide".upper():
+    dividing_complex_numbers()
+  
+  else:
+    print("\nInvalid Input!")
+    control_center()
+control_center()
+
+
+
+
+'''
+def fnInput():
+  dctInputs={}
+  iWhole1=int(input("Enter whole number "))
+  dctInputs['W1'] = iWhole1
+  iNum1=int(input("Enter numerator "))
+  dctInputs['N1'] = iNum1
+  iDen1=int(input("Enter denominator "))
+  dctInputs['D1'] = iDen1
+  iWhole2=int(input("Enter whole number "))
+  dctInputs['W2'] = iWhole2
+  iNum2=int(input("Enter numerator "))
+  dctInputs['N2'] = iNum2
+  iDen2=int(input("Enter denominator "))
+  dctInputs['D2'] = iDen2
+  return dctInputs
+
+def fnAddProcess(dctInput):
+  iWholeTemp=0
+  isSimplified=[]
+
+  iWholeAnswer=(dctInput.get("W1")) +(dctInput.get("W2"))
+  iNumAnswer=(dctInput.get('N1')*dctInput.get('D2'))+(dctInput.get('N2')*dctInput.get('D1'))
+  iDenAnswer=(dctInput.get('D1')*dctInput.get('D2'))
+    
+  if iNumAnswer>iDenAnswer:
+    iWholeTemp=iNumAnswer//iDenAnswer
+    iNumAnswer=iNumAnswer%iDenAnswer
+  
+  iWholeAnswer=iWholeAnswer+iWholeTemp
+  isSimplified=fnSimplified(iNumAnswer,iDenAnswer)
+  iNumAnswer=isSimplified[0]
+  iDenAnswer=isSimplified[1]
+  return iWholeAnswer, iNumAnswer,iDenAnswer
+
+def fnSimplified(iNumAnswer,iDenAnswer):
+  for i in range(10,1,-1):
+    if iNumAnswer%i==0 and iDenAnswer%i==0:
+        iNumAnswer=iNumAnswer/i
+        iDenAnswer=iDenAnswer/i
+  return iNumAnswer,iDenAnswer
+
+def fnOutput(dctInput,tplAnswer):
+  sFraction1=str(dctInput.get('W1'))+ " " +str(dctInput.get('N1'))+"/"+str(dctInput.get('D1'))
+
+  sFraction2=str(dctInput.get('W2'))+ " " +str(dctInput.get('N2'))+"/"+str(dctInput.get('D2'))
+
+  sFraction3=str(int(tplAnswer[0]))+ " " +str(int(tplAnswer[1]))+"/"+str(int(tplAnswer[2]))
+
+  print(sFraction1+ " + " +sFraction2 + " = " + sFraction3)
+
+#******************************************************************************  
+dctFractions={}
+tplAnswer=()
+sResult=""
+dctFractions=fnInput()
+tplAnswer=fnAddProcess(dctFractions)
+#tplAnswer=fnSubProcess(dctFractions)
+#tplAnswer=fnMultProcess(dctFractions)
+#tplAnswer=fnDivProcess(dctFractions)
+sResult=fnOutput(dctFractions,tplAnswer)
+'''
