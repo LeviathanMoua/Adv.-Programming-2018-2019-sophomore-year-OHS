@@ -1,0 +1,217 @@
+'''
+Instructions from your teacher:
+Write functions for the folloing:
+
+Date
+A Function, which returns the current system date.
+
+IsDate
+A Function, which returns a Boolean Value whether or not the supplied parameter is a date.
+
+Month
+A Function, which returns an integer between 1 and 12 that represents the month of the specified date.
+
+Year
+A Function, which returns an integer that represents the year of the specified date.
+
+MonthName
+A Function, which returns the name of the particular month for the specified date.
+
+WeekDay
+A Function, which returns an integer(1 to 7) that represents the day of the week for the specified day.
+
+WeekDayName
+A Function, which returns the weekday name for the specified date.
+'''
+import time
+import datetime
+import replit
+
+def funDoMoreFun():
+  inpYesOrNo = input("\nWould you like to try out more function?").lower()
+  
+  if inpYesOrNo == "yes" or inpYesOrNo == "y":
+    replit.clear()
+    funControlCenter()
+  elif inpYesOrNo == "no" or inpYesOrNo == "n":
+    replit.clear()
+    print("Goodbye!")
+  else:
+    replit.clear()
+    print("Invalid Input!\n")
+    funDoMoreFun()
+    
+def funDate():
+  
+  intYear, intMonth, intDay = time.strftime("%Y,%m,%d").split(',')
+  print("The year is: " + intYear)
+  print("\nThe month is: " + intMonth)
+  print("\nThe day is: " + intDay)
+  funDoMoreFun()
+
+
+
+def funIsDate():
+  inputDate = input("\nPlease input a date in the form 'yyyy/mm/dd'\nEnter here: ")
+  year,month,day = inputDate.split('/')
+  isValidDate = True
+  try:
+    datetime.datetime(int(year),int(month),int(day))
+  except ValueError:
+    isValidDate = False
+  if(isValidDate):
+    print ("Inputed date is valid")
+    funDoMoreFun()
+  else:
+    print ("Inputed date is invalid")
+    funDoMoreFun()
+
+
+
+def funMonth():
+  intDate = input("\nEnter a date in the form yyyy/mm/dd\nEnter here: ")
+  intYear, intMonth, intDay = intDate.split("/")
+  intMonth = int(intMonth)
+  print("The month is: " + str(intMonth))
+  funDoMoreFun()
+  
+  
+def funYear():
+  intDate = input("\nEnter a date in the form yyyy/mm/dd\nEnter here: ")
+  intYear, intMonth, intDay = intDate.split("/")
+  print("\nThe year is: " + intYear)
+  funDoMoreFun()
+
+
+def funMonthName():
+  intDate = input("\nEnter a date in the form yyyy/mm/dd\nEnter here: ")
+  intYear, intMonth, intDay = intDate.split("/")
+  intMonth = int(intMonth)
+  if intMonth == 1:
+    print("\nThe month is January")
+    funDoMoreFun()
+    
+  elif intMonth == 2:
+    print("\nThe month is February")
+    funDoMoreFun()
+    
+  elif intMonth == 3:
+    print("\nThe month is March")
+    funDoMoreFun()
+    
+  elif intMonth == 4:
+    print("\nThe month is April")
+    funDoMoreFun()
+    
+  elif intMonth == 5:
+    print("\nThe month is May")
+    funDoMoreFun()
+    
+  elif intMonth == 6:
+    print("\nThe month is June")
+    funDoMoreFun()
+    
+  elif intMonth == 7:
+    print("\nThe month is July")
+    funDoMoreFun()
+    
+  elif intMonth == 8:
+    print("\nThe month is August")
+    funDoMoreFun()
+    
+  elif intMonth == 9:
+    print("\nThe month is September")
+    funDoMoreFun()
+    
+  elif intMonth == 10:
+    print("\nThe month is October")
+    funDoMoreFun()
+    
+  elif intMonth == 11:
+    print("\nThe month is November")
+    funDoMoreFun()
+    
+  elif intMonth == 12:
+    print("\nThe month is December")
+    funDoMoreFun()
+    
+
+
+def funWeekDay():
+  intDate = input("\nEnter a date in the form yyyy/mm/dd\nEnter here: ")
+  intYear, intMonth, intDay = intDate.split("/")
+  intYear = int(intYear)
+  intMonth = int(intMonth)
+  intDay = int(intDay)
+  print("\nThe day of the week is:", datetime.datetime(intYear,intMonth,intDay).weekday())
+  funDoMoreFun()
+
+
+
+def funWeekDayName():
+  intDate = input("\nEnter a date in the form yyyy/mm/dd\nEnter here: ")
+  intYear, intMonth, intDay = intDate.split("/")
+  intYear = int(intYear)
+  intMonth = int(intMonth)
+  intDay = int(intDay)
+  week_day = datetime.datetime(intYear,intMonth,intDay).weekday()
+  
+  if week_day == 0:
+    print("\nThe day of the week is Monday!")
+    funDoMoreFun()
+    
+  if week_day == 1:
+    print("\nThe day of the week is Tuesday!")
+    funDoMoreFun()
+    
+  if week_day == 2:
+    print("\nThe day of the week is Wednesday!")
+    funDoMoreFun()
+    
+  if week_day == 3:
+    print("\nThe day of the week is Thursday!")
+    funDoMoreFun()
+    
+  if week_day == 4:
+    print("\nThe day of the week is Friday!")
+    funDoMoreFun()
+    
+  if week_day == 5:
+    print("\nThe day of the week is Saturday!")
+    funDoMoreFun()
+    
+  if week_day == 6:
+    print("\nThe day of the week is Sunday!")
+    funDoMoreFun()
+    
+    
+
+def funControlCenter():
+  intInput = int(input("1) Date\n2) IsDate\n3) Month\n4) Year\n5) MonthName\n6) WeekDay\n7) WeekDayName\n\nPlease select the number of which function you would like to use\n\nEnter here:"))
+  
+  if intInput == 1:
+    funDate()
+  
+  elif intInput == 2:
+    funIsDate()
+  
+  elif intInput == 3:
+    funMonth()
+  
+  elif intInput == 4:
+    funYear()
+  
+  elif intInput == 5:
+    funMonthName()
+  
+  elif intInput == 6:
+    funWeekDay()
+  
+  elif intInput == 7:
+    funWeekDayName()
+  
+  else:
+    replit.clear()
+    print("Invalid Input!\n")
+    funControlCenter()
+funControlCenter()
